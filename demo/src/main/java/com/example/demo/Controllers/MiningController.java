@@ -1,14 +1,13 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Entities.ChosenMines.ChosenCrystalMineEntity;
 import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
 import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
+import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
-import com.example.demo.Repositories.ChosenSilverMineRepository;
-import com.example.demo.Repositories.GoldMineRepository;
-import com.example.demo.Repositories.PlayerRepository;
+import com.example.demo.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +27,8 @@ public class MiningController {
     ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
     @Autowired
     ChosenSilverMineRepository chosenSilverMineRepository;
+    @Autowired
+    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
     @GetMapping("/mine")
     public String mineChoice(Model model) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -90,5 +91,23 @@ public class MiningController {
     @GetMapping("/silver/mine/success")
     public String getSilverSuccessMessage(){
         return "silver-success-message";
+    }
+    @GetMapping("/mine/crystal")
+    public String mineCrystal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
+        CrystalMine currentCrystalMine = (chosenCrystalMineEntity != null) ? chosenCrystalMineEntity.getCurrentCrystalMine() : null;
+        if (currentCrystalMine != null && currentCrystalMine.getMaterials(player)) {
+            playerRepository.save(player);
+            return "redirect:/crystal/mine/success";
+        } else {
+            return "redirect:/mine";
+        }
+    }
+    @GetMapping("/crystal/mine/success")
+    public String getCrystalSuccessMessage(){
+        return "crystal-success-message";
     }
 }
