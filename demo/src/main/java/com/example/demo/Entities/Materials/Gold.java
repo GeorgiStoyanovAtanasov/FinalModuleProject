@@ -14,8 +14,9 @@ public class Gold {
     Gold(){
     }
 
-    public Gold(int amount) {
+    public Gold(int amount, Player player) {
         this.amount = amount;
+        this.player = player;
     }
 
     public int getAmount() {

@@ -13,9 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
+@Controller
 public class MiningController {
     @Autowired
     GoldMineRepository goldMineRepository;
@@ -57,7 +58,7 @@ public class MiningController {
         }
     }
     @GetMapping("/gold/mine/success")
-    public String getSuccessMessage(){
+    public String getGoldSuccessMessage(){
         return "gold-success-message";
     }
     @GetMapping("/admin/selectGoldMine")
@@ -81,9 +82,13 @@ public class MiningController {
         SilverMine currentSilverMine = (chosenSilverMineEntity != null) ? chosenSilverMineEntity.getCurrentSilverMine() : null;
         if (currentSilverMine != null && currentSilverMine.getMaterials(player)) {
             playerRepository.save(player);
-            return "redirect:/gold/mine/success";
+            return "redirect:/silver/mine/success";
         } else {
             return "redirect:/mine";
         }
+    }
+    @GetMapping("/silver/mine/success")
+    public String getSilverSuccessMessage(){
+        return "silver-success-message";
     }
 }

@@ -27,11 +27,13 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/mine").permitAll()//hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers("/home").permitAll()//hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")//hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers("/mine/gold").permitAll()
-                        .requestMatchers("/gold/mine/success").permitAll()
-                        .requestMatchers("/admin/selectGoldMine").permitAll()
+                        .requestMatchers("/mine").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")//hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/mine/gold").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/gold/mine/success").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/mine/silver").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/silver/mine/success").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/admin/selectGoldMine").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")

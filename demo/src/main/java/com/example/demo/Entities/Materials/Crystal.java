@@ -1,13 +1,12 @@
 package com.example.demo.Entities.Materials;
 
 import com.example.demo.Entities.Player;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Crystal {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     private Player player;
@@ -16,8 +15,9 @@ public class Crystal {
     public Crystal() {
     }
 
-    public Crystal(int amount) {
+    public Crystal(int amount, Player player) {
         this.amount = amount;
+        this.player = player;
     }
 
     public int getAmount() {
