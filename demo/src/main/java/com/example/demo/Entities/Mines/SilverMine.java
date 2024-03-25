@@ -2,6 +2,8 @@ package com.example.demo.Entities.Mines;
 
 import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Player;
+import com.example.demo.Services.GoldMineService;
+import com.example.demo.Services.SilverMineService;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,26 +25,6 @@ public class SilverMine {
     public SilverMine() {
     }
 
-    public boolean getMaterials(Player player) {
-        if (canPlayerGetMaterials(player)) {
-            player.getSilver().setAmount(player.getSilver().getAmount() + value);
-            return true;
-        }
-        return false;
-    }
-
-    public synchronized boolean canPlayerGetMaterials(Player player) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate lastAccessDate = lastAccessDates.getOrDefault(player, null);
-
-        if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
-            lastAccessDates.put(player, currentDate);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public Map<Player, LocalDate> getLastAccessDates() {
         return lastAccessDates;
     }
@@ -53,6 +35,22 @@ public class SilverMine {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    public boolean getMaterials(Player player, SilverMineService silverMineService) {
+        return silverMineService.getMaterials(this, player);
+    }
+
+    public boolean canPlayerGetMaterials(Player player, SilverMineService silverMineService) {
+        return silverMineService.canPlayerGetMaterials(this, player);
     }
 
     public void setLastAccessDates(Map<Player, LocalDate> lastAccessDates) {
