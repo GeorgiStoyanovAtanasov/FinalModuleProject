@@ -2,8 +2,10 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import com.example.demo.Repositories.ArcherWorkshopRepository;
 import com.example.demo.Repositories.PlayerRepository;
+import com.example.demo.Repositories.SwordsmanWorkshopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,6 +21,8 @@ public class WorkshopController {
     PlayerRepository playerRepository;
     @Autowired
     ArcherWorkshopRepository archerWorkshopRepository;
+    @Autowired
+    SwordsmanWorkshopRepository swordsmanWorkshopRepository;
     @GetMapping("/buy/workshop")
     public String chooseWorkshopToBuyForm(){
         return "choose-workshop";
@@ -33,12 +37,23 @@ public class WorkshopController {
             int price = 200;
             if(playerGold > price){
                 player.getGold().setAmount(playerGold - price);
+                archerWorkshopRepository.save(new ArcherWorkshop(player));
             }
-            archerWorkshopRepository.save(new ArcherWorkshop(player));
-            return "buy-archer-workshop";
+            return "redirect:/home";
+            //return "buy-archer-workshop";
         }
         else if(workshopType.equals("swordsman")){
-            return "buy-swordsman-workshop";
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            Player player = playerRepository.findByUsername(username);
+            int playerSilver = player.getSilver().getAmount();
+            int price = 500;
+            if(playerSilver > price){
+                player.getSilver().setAmount(playerSilver - price);
+                swordsmanWorkshopRepository.save(new SwordsmanWorkshop(player));
+            }
+            return "redirect:/home";
+            //return "buy-swordsman-workshop";
         }
         return "choose-workshop";
     }

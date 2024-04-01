@@ -1,11 +1,13 @@
 package com.example.demo.Entities.Workshops;
 
+import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Entities.Fighters.Swordsman;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class SwordsmanWorkshop {
@@ -14,14 +16,13 @@ public class SwordsmanWorkshop {
     private Long id;
     @ManyToOne
     private Player player;
-
     private LocalDate lastAccessDate;
 
     public SwordsmanWorkshop() {
     }
 
-    public SwordsmanWorkshop(LocalDate lastAccessDate) {
-        this.lastAccessDate = lastAccessDate;
+    public SwordsmanWorkshop(Player player) {
+        this.player = player;
     }
 
     public Long getId() {
@@ -46,13 +47,5 @@ public class SwordsmanWorkshop {
 
     public void setPlayer(Player player) {
         this.player = player;
-    }
-
-    public void makeArcher(List<Swordsman> swordsmanList) {
-        LocalDate currentDate = LocalDate.now();
-        if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
-            swordsmanList.add(new Swordsman());
-            lastAccessDate = currentDate;
-        }
     }
 }

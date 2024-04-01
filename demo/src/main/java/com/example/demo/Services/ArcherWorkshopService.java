@@ -20,17 +20,22 @@ public class ArcherWorkshopService {
     @Autowired
     ArcherRepository archerRepository;
     public boolean addArcher(Player player, ArcherWorkshop archerWorkshop) {
-        if (canPlayerGetMaterials(archerWorkshop)) {
+        if (canPlayerGetArcher(archerWorkshop)) {
             Archer archer = new Archer(player);
             archerRepository.save(archer);
             player.getArchers().add(archer);
             playerRepository.save(player);
+            int goldAmount = player.getGold().getAmount();
+            if(goldAmount > 10) {
+                player.getGold().setAmount(goldAmount - 10);
+                playerRepository.save(player);
+            }
             return true;
         }
         return false;
     }
 
-    public synchronized boolean canPlayerGetMaterials(ArcherWorkshop archerWorkshop) {
+    public synchronized boolean canPlayerGetArcher(ArcherWorkshop archerWorkshop) {
         LocalDate currentDate = LocalDate.now();
         LocalDate lastAccessDate = archerWorkshop.getLastAccessDate();
         if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
