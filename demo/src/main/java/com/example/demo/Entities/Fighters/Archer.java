@@ -14,8 +14,13 @@ public class Archer {
     private int value;
 
     public Archer() {
-        this.value = 1;
     }
+
+    public Archer(Player player) {
+        this.player = player;
+        this.value = 2;
+    }
+
     public int getValue() {
         return value;
     }
