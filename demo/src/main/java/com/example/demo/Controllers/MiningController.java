@@ -8,6 +8,9 @@ import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
 import com.example.demo.Entities.Player;
 import com.example.demo.Repositories.*;
+import com.example.demo.Services.CrystalMineService;
+import com.example.demo.Services.GoldMineService;
+import com.example.demo.Services.SilverMineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +32,12 @@ public class MiningController {
     ChosenSilverMineRepository chosenSilverMineRepository;
     @Autowired
     ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
+    @Autowired
+    CrystalMineService crystalMineService;
+    @Autowired
+    GoldMineService goldMineService;
+    @Autowired
+    SilverMineService silverMineService;
     @GetMapping("/mine")
     public String mineChoice(Model model) {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,7 +60,7 @@ public class MiningController {
         Player player = playerRepository.findByUsername(username);
         ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
         GoldMine currentGoldMine = (chosenGoldMineEntity != null) ? chosenGoldMineEntity.getCurrentGoldMine() : null;
-        if (currentGoldMine != null && currentGoldMine.getMaterials(player)) {
+        if (currentGoldMine != null && currentGoldMine.getMaterials(player, goldMineService)) {
             playerRepository.save(player);
             return "redirect:/gold/mine/success";
         } else {
@@ -81,7 +90,7 @@ public class MiningController {
         Player player = playerRepository.findByUsername(username);
         ChosenSilverMineEntity chosenSilverMineEntity = chosenSilverMineRepository.findById(1L).orElse(null);
         SilverMine currentSilverMine = (chosenSilverMineEntity != null) ? chosenSilverMineEntity.getCurrentSilverMine() : null;
-        if (currentSilverMine != null && currentSilverMine.getMaterials(player)) {
+        if (currentSilverMine != null && currentSilverMine.getMaterials(player, silverMineService)) {
             playerRepository.save(player);
             return "redirect:/silver/mine/success";
         } else {
@@ -99,7 +108,7 @@ public class MiningController {
         Player player = playerRepository.findByUsername(username);
         ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
         CrystalMine currentCrystalMine = (chosenCrystalMineEntity != null) ? chosenCrystalMineEntity.getCurrentCrystalMine() : null;
-        if (currentCrystalMine != null && currentCrystalMine.getMaterials(player)) {
+        if (currentCrystalMine != null && currentCrystalMine.getMaterials(player, crystalMineService)) {
             playerRepository.save(player);
             return "redirect:/crystal/mine/success";
         } else {

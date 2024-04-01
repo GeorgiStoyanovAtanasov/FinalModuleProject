@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -55,5 +56,22 @@ public class PlayerController {
 //            }
 //        }
 //        return "redirect:/home";
+//    }
+//@GetMapping("/register")
+//public String registerForm(Model model) {
+//    return "register";
+//}
+//
+//    @PostMapping("/register")
+//    public String registerPlayer(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("role") String role) {
+//        if (playerRepository.existsByUsername(username)) {
+//            return "redirect:/register?error";
+//        }
+//        String encodedPassword = passwordEncoder.encode(password);
+//
+//        Player player = new Player(username, encodedPassword, role);
+//        playerRepository.save(player);
+//
+//        return "redirect:/login";
 //    }
 }

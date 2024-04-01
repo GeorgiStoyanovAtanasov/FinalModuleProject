@@ -1,11 +1,13 @@
 package com.example.demo.Entities.Workshops;
 
 import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class ArcherWorkshop {
@@ -19,8 +21,8 @@ public class ArcherWorkshop {
     public ArcherWorkshop() {
     }
 
-    public ArcherWorkshop(LocalDate lastAccessDate) {
-        this.lastAccessDate = lastAccessDate;
+    public ArcherWorkshop(Player player) {
+        this.player = player;
     }
 
     public Long getId() {
@@ -47,12 +49,22 @@ public class ArcherWorkshop {
         this.player = player;
     }
 
-    public void makeArcher(List<Archer> archerList) {
-        LocalDate currentDate = LocalDate.now();
-
-        if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
-            archerList.add(new Archer());
-            lastAccessDate = currentDate;
-        }
-    }
+//    public boolean addArcher(Player player, ArcherWorkshop archerWorkshop) {
+//        if (canPlayerGetMaterials(archerWorkshop, player)) {
+//            player.getArchers().add(new Archer(player));
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public synchronized boolean canPlayerGetMaterials(ArcherWorkshop archerWorkshop, Player player) {
+//        LocalDate currentDate = LocalDate.now();
+//        LocalDate lastAccessDates = archerWorkshop.getLastAccessDate();
+//        if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
+//           archerWorkshop.setLastAccessDate(currentDate);
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 }
