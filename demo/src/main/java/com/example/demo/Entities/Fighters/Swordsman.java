@@ -10,10 +10,15 @@ public class Swordsman {
     private Long id;
     @ManyToOne
     private Player player;
+
     private int value;
 
     public Swordsman() {
-        this.value = 2;
+    }
+
+    public Swordsman(Player player) {
+        this.player = player;
+        this.value = 3;
     }
 
     public int getValue() {
@@ -40,3 +45,4 @@ public class Swordsman {
         this.player = player;
     }
 }
+

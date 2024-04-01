@@ -90,19 +90,19 @@ public class Player {
         this.password = password;
     }
 
-    public List<ArcherWorkshop> getArcherWorkshop() {
+    public List<ArcherWorkshop> getArcherWorkshops() {
         return archerWorkshops;
     }
 
-    public void setArcherWorkshop(List<ArcherWorkshop> archerWorkshop) {
+    public void setArcherWorkshops(List<ArcherWorkshop> archerWorkshop) {
         this.archerWorkshops = archerWorkshop;
     }
 
-    public List<SwordsmanWorkshop> getSwordsmanWorkshop() {
+    public List<SwordsmanWorkshop> getSwordsmanWorkshops() {
         return swordsmanWorkshops;
     }
 
-    public void setSwordsmanWorkshop(List<SwordsmanWorkshop> swordsmanWorkshop) {
+    public void setSwordsmanWorkshops(List<SwordsmanWorkshop> swordsmanWorkshop) {
         this.swordsmanWorkshops = swordsmanWorkshop;
     }
 
