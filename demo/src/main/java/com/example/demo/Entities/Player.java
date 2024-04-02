@@ -46,7 +46,16 @@ public class Player {
     private Role role;
 
     private boolean isAttacked;
-    public Player(String username, String encodedPassword, String role) {
+    public Player() {
+    }
+
+    public Player(String username, String password, Gold gold, Silver silver, Crystal crystal, Role role) {
+        this.username = username;
+        this.password = password;
+        this.gold = gold;
+        this.silver = silver;
+        this.crystal = crystal;
+        this.role = role;
     }
     //private Player attackUser(Player user1, Player user2){
     //    //method body
