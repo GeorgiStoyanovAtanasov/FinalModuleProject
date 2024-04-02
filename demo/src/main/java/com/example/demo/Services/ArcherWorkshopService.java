@@ -19,14 +19,14 @@ public class ArcherWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     ArcherRepository archerRepository;
+
     public boolean addArcher(Player player, ArcherWorkshop archerWorkshop) {
         if (canPlayerGetArcher(archerWorkshop)) {
-            Archer archer = new Archer(player);
-            archerRepository.save(archer);
-            player.getArchers().add(archer);
-            playerRepository.save(player);
             int goldAmount = player.getGold().getAmount();
-            if(goldAmount > 10) {
+            if (goldAmount > 10) {
+                Archer archer = new Archer(player);
+                archerRepository.save(archer);
+                player.getArchers().add(archer);
                 player.getGold().setAmount(goldAmount - 10);
                 playerRepository.save(player);
             }

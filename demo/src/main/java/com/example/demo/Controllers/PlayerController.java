@@ -62,8 +62,10 @@ public class PlayerController {
         model.addAttribute("crystal", player.getCrystal().getAmount());
         model.addAttribute("archerWorkshops", player.getArcherWorkshops().size());
         model.addAttribute("swordsmanWorkshops", player.getSwordsmanWorkshops().size());
+        model.addAttribute("cavalryWorkshops", player.getCavalryWorkshops().size());
         model.addAttribute("archers", player.getArchers().size());
         model.addAttribute("swordsman", player.getSwordsmen().size());
+        model.addAttribute("cavalries", player.getCavalries().size());
         return "home";
     }
     @GetMapping("/register")

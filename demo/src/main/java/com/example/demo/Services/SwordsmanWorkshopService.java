@@ -19,14 +19,14 @@ public class SwordsmanWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     SwordsmanRepository swordsmanRepository;
+
     public boolean addSwordsman(Player player, SwordsmanWorkshop swordsmanWorkshop) {
         if (canPlayerGetSwordsman(swordsmanWorkshop)) {
-            Swordsman swordsman = new Swordsman(player);
-            swordsmanRepository.save(swordsman);
-            player.getSwordsmen().add(swordsman);
-            playerRepository.save(player);
             int silverAmount = player.getSilver().getAmount();
-            if(silverAmount >= 20) {
+            if (silverAmount >= 20) {
+                Swordsman swordsman = new Swordsman(player);
+                swordsmanRepository.save(swordsman);
+                player.getSwordsmen().add(swordsman);
                 player.getSilver().setAmount(silverAmount - 20);
                 playerRepository.save(player);
             }
