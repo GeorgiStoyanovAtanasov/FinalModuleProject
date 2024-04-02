@@ -1,13 +1,8 @@
 package com.example.demo.Entities.Workshops;
-
-import com.example.demo.Entities.Fighters.Archer;
-import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 public class CavalryWorkshop {
