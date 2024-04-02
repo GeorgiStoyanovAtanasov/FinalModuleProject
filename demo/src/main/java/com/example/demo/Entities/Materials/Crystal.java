@@ -14,7 +14,10 @@ public class Crystal {
 
     public Crystal() {
     }
-
+    public Crystal(Player player){
+        this.player = player;
+        this.amount = 0;
+    }
     public Crystal(int amount, Player player) {
         this.amount = amount;
         this.player = player;

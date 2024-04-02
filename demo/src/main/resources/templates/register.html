@@ -43,25 +43,18 @@
     <h2 class="text-center">Sing up for playing</h2>
     <h2 class="text-center">Imperia Online</h2>
     <h2 class="text-center">The Redemption</h2>
-    <form th:action="@{/register}" method="post">
+    <form action="#" th:object="${player}" th:action="@{/register}" method="post">
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username">
+            <input type="text" class="form-control" id="username" th:field="*{username}">
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password">
-        </div>
-        <div class="form-group">
-            <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="USER">USER</option>
-                <option value="ADMIN">ADMIN</option>
-            </select><br>
+            <input type="password" class="form-control" id="password" th:field="*{password}">
         </div>
         <button type="submit" class="btn btn-block">Submit</button>
-    </form>
-    <div class="form-group"><a href="http://localhost:8080/login">Sign in:</a></div>
+    </form><br><br>
+    <div class="form-group"><a href="/login" style="text-decoration: none; background-color: #8b4513; color: #fff; padding: 10px 20px; border-radius: 5px;">Sign in:</a></div>
 </div>
 </body>
 </html>

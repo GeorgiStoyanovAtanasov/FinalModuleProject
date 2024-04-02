@@ -2,11 +2,13 @@ package com.example.demo.Entities;
 
 import com.example.demo.Constants.Role;
 import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Materials.Crystal;
 import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
@@ -27,9 +29,14 @@ public class Player {
 
     @OneToMany(mappedBy = "player")
     private List<Swordsman> swordsmen;
+    @OneToMany(mappedBy = "player")
+    private List<Cavalry> cavalry;
 
     @OneToMany(mappedBy = "player")
     private List<ArcherWorkshop> archerWorkshops;
+
+    @OneToMany(mappedBy = "player")
+    private List<CavalryWorkshop> cavalryWorkshops;
 
     @OneToMany(mappedBy = "player")
     private List<SwordsmanWorkshop> swordsmanWorkshops;
@@ -46,17 +53,27 @@ public class Player {
     private Role role;
 
     private boolean isAttacked;
-    public Player(String username, String encodedPassword, String role) {
+    public Player() {
+    }
+
+    public Player(String username, String password, Gold gold, Silver silver, Crystal crystal, Role role) {
+        this.username = username;
+        this.password = password;
+        this.gold = gold;
+        this.silver = silver;
+        this.crystal = crystal;
+        this.role = role;
     }
     //private Player attackUser(Player user1, Player user2){
     //    //method body
     //}
 
-    public Player(String username, String password, List<ArcherWorkshop> archerWorkshops, List<SwordsmanWorkshop> swordsmanWorkshops, Gold gold, Silver silver, Crystal crystal, boolean isAttacked, List<Archer> archer, List<Swordsman> swordsmen, Role role) {
+    public Player(String username, String password, List<ArcherWorkshop> archerWorkshops, List<SwordsmanWorkshop> swordsmanWorkshops, List<CavalryWorkshop> cavalryWorkshops, Gold gold, Silver silver, Crystal crystal, boolean isAttacked, List<Archer> archer, List<Swordsman> swordsmen, Role role) {
         this.username = username;
         this.password = password;
         this.archerWorkshops = archerWorkshops;
         this.swordsmanWorkshops = swordsmanWorkshops;
+        this.cavalryWorkshops = cavalryWorkshops;
         this.gold = gold;
         this.silver = silver;
         this.crystal = crystal;
@@ -90,19 +107,19 @@ public class Player {
         this.password = password;
     }
 
-    public List<ArcherWorkshop> getArcherWorkshop() {
+    public List<ArcherWorkshop> getArcherWorkshops() {
         return archerWorkshops;
     }
 
-    public void setArcherWorkshop(List<ArcherWorkshop> archerWorkshop) {
+    public void setArcherWorkshops(List<ArcherWorkshop> archerWorkshop) {
         this.archerWorkshops = archerWorkshop;
     }
 
-    public List<SwordsmanWorkshop> getSwordsmanWorkshop() {
+    public List<SwordsmanWorkshop> getSwordsmanWorkshops() {
         return swordsmanWorkshops;
     }
 
-    public void setSwordsmanWorkshop(List<SwordsmanWorkshop> swordsmanWorkshop) {
+    public void setSwordsmanWorkshops(List<SwordsmanWorkshop> swordsmanWorkshop) {
         this.swordsmanWorkshops = swordsmanWorkshop;
     }
 
@@ -160,5 +177,21 @@ public class Player {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public List<CavalryWorkshop> getCavalryWorkshops() {
+        return cavalryWorkshops;
+    }
+
+    public void setCavalryWorkshops(List<CavalryWorkshop> cavalryWorkshops) {
+        this.cavalryWorkshops = cavalryWorkshops;
+    }
+
+    public List<Cavalry> getCavalry() {
+        return cavalry;
+    }
+
+    public void setCavalry(List<Cavalry> cavalry) {
+        this.cavalry = cavalry;
     }
 }

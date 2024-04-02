@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-public class SwordsmanWorkshop {
+public class CavalryWorkshop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,10 +18,10 @@ public class SwordsmanWorkshop {
     private Player player;
     private LocalDate lastAccessDate;
 
-    public SwordsmanWorkshop() {
+    public CavalryWorkshop() {
     }
 
-    public SwordsmanWorkshop(Player player) {
+    public CavalryWorkshop(Player player) {
         this.player = player;
     }
 

@@ -11,7 +11,11 @@ public class Gold {
     @OneToOne
     private Player player;
     private int amount;
-    Gold(){
+    public Gold(){
+    }
+    public Gold(Player player){
+        this.player = player;
+        this.amount = 0;
     }
 
     public Gold(int amount, Player player) {

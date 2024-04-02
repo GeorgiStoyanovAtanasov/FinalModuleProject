@@ -2,9 +2,86 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Imperia Online: The Redemption - Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e3d7bd;
+            font-family: 'Arial', sans-serif;
+            padding-top: 50px;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #e6e6e6;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 40px;
+            width: 100%;
+        }
+
+        .info-box {
+            flex: 1;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .info-box p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .info-box h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .info-box {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<p th:text="${gold}">is your gold</p>
+<div class="welcome-message">
+    <h2>Welcome, <span th:text="${username}"></span>!</h2>
+</div>
+<div class="container">
+    <div class="info-box">
+        <h3>Your current resources:</h3>
+        <p><strong>Gold:</strong> <span th:text="${gold}"></span></p>
+        <p><strong>Silver:</strong> <span th:text="${silver}"></span></p>
+        <p><strong>Crystal:</strong> <span th:text="${crystal}"></span></p>
+        <a href="/buy/workshop">Buy Workshop</a>
+    </div>
+    <div class="info-box">
+        <h3>Your Workshops:</h3>
+        <p><strong>Archer Workshops:</strong> <span th:text="${archerWorkshops}"></span></p><br>
+        <p><strong>Swordsman Workshops:</strong> <span th:text="${swordsmanWorkshops}"></span></p><br>
+        <p><strong>Cavalry Workshops:</strong> <span th:text="${cavalryWorkshops}"></span></p><br>
+        <a href="/mine">Mine</a>
+    </div>
+    <div class="info-box">
+        <h3>Your Fighters:</h3>
+        <p><strong>Archers:</strong> <span th:text="${archers}"></span></p>
+        <p><strong>Swordsmen:</strong> <span th:text="${swordsman}"></span></p>
+        <p><strong>Cavalry:</strong> <span th:text="${cavalry}"></span></p>
+        <a href="/add/archer">Add Archer</a><br>
+        <a href="/add/swordsman">Add Swordsman</a><br>
+        <a href="/add/cavalry">Add Cavalry</a><br>
+    </div>
+</div>
 </body>
 </html>

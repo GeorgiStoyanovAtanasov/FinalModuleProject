@@ -40,17 +40,6 @@ public class MiningController {
     SilverMineService silverMineService;
     @GetMapping("/mine")
     public String mineChoice(Model model) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        Player player = playerRepository.findByUsername(username);
-//        GoldMine goldMine = goldMineRepository.findById(1L).orElse(null);
-//        if (goldMine != null && goldMine.getMaterials(player)) {
-//            playerRepository.save(player);
-//            model.addAttribute("gold", player.getGold().getAmount());
-//            return "redirect:/home";
-//        } else {
-//            return "redirect:/login";
-//        }
         return "mine-choice";
     }
     @GetMapping("/mine/gold")

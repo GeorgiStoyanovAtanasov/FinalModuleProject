@@ -48,23 +48,4 @@ public class ArcherWorkshop {
     public void setPlayer(Player player) {
         this.player = player;
     }
-
-//    public boolean addArcher(Player player, ArcherWorkshop archerWorkshop) {
-//        if (canPlayerGetMaterials(archerWorkshop, player)) {
-//            player.getArchers().add(new Archer(player));
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public synchronized boolean canPlayerGetMaterials(ArcherWorkshop archerWorkshop, Player player) {
-//        LocalDate currentDate = LocalDate.now();
-//        LocalDate lastAccessDates = archerWorkshop.getLastAccessDate();
-//        if (lastAccessDate == null || !lastAccessDate.equals(currentDate)) {
-//           archerWorkshop.setLastAccessDate(currentDate);
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }
