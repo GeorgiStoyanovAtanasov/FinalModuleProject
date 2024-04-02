@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Choose Cavalry Workshop:</h1>
+<form action="#" th:action="@{/add/cavalry}" method="post">
+    <div>
+        <select name="cavalryWorkshop">
+            <option th:each="cavalryWorkshop : ${cavalryWorkshops}" th:value="${cavalryWorkshop.id}" th:text="${cavalryWorkshop.id}">Cavalry Workshop:
+            </option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
+</body>
+</html>

@@ -38,6 +38,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/add/archer").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/buy/workshop").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/add/swordsman").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/add/cavalry").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/admin/selectGoldMine").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 )
                 .formLogin((form) -> form

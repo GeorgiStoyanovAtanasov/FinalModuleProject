@@ -2,11 +2,13 @@ package com.example.demo.Entities;
 
 import com.example.demo.Constants.Role;
 import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Materials.Crystal;
 import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
@@ -27,12 +29,15 @@ public class Player {
 
     @OneToMany(mappedBy = "player")
     private List<Swordsman> swordsmen;
-
+    @OneToMany(mappedBy = "player")
+    private List<Cavalry> cavalries;
     @OneToMany(mappedBy = "player")
     private List<ArcherWorkshop> archerWorkshops;
 
     @OneToMany(mappedBy = "player")
     private List<SwordsmanWorkshop> swordsmanWorkshops;
+    @OneToMany(mappedBy = "player")
+    private List<CavalryWorkshop> cavalryWorkshops;
 
     @OneToOne(mappedBy = "player")
     private Gold gold;
@@ -111,6 +116,14 @@ public class Player {
         return swordsmanWorkshops;
     }
 
+    public List<CavalryWorkshop> getCavalryWorkshops() {
+        return cavalryWorkshops;
+    }
+
+    public void setCavalryWorkshops(List<CavalryWorkshop> cavalryWorkshops) {
+        this.cavalryWorkshops = cavalryWorkshops;
+    }
+
     public void setSwordsmanWorkshops(List<SwordsmanWorkshop> swordsmanWorkshop) {
         this.swordsmanWorkshops = swordsmanWorkshop;
     }
@@ -161,6 +174,14 @@ public class Player {
 
     public void setSwordsmen(List<Swordsman> swordsmen) {
         this.swordsmen = swordsmen;
+    }
+
+    public List<Cavalry> getCavalries() {
+        return cavalries;
+    }
+
+    public void setCavalries(List<Cavalry> cavalries) {
+        this.cavalries = cavalries;
     }
 
     public Role getRole() {

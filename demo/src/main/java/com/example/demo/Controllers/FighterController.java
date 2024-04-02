@@ -4,9 +4,11 @@ import com.example.demo.Entities.Fighters.Archer;
 import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import com.example.demo.Repositories.*;
 import com.example.demo.Services.ArcherWorkshopService;
+import com.example.demo.Services.CavalryWorkshopService;
 import com.example.demo.Services.SwordsmanWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,6 +37,10 @@ public class FighterController {
     SwordsmanWorkshopRepository swordsmanWorkshopRepository;
     @Autowired
     SwordsmanWorkshopService swordsmanWorkshopService;
+    @Autowired
+    CavalryWorkshopRepository cavalryWorkshopRepository;
+    @Autowired
+    CavalryWorkshopService cavalryWorkshopService;
 
     @GetMapping("/add/archer")
     public String chooseArcherWorkshopForm(Model model) {
@@ -86,6 +92,32 @@ public class FighterController {
             return "redirect:/add/swordsman";
         }
         model.addAttribute("swordsmen", player.getSwordsmen());
+        return "redirect:/home";
+        //return "add-swordsman-success";
+    }
+    @GetMapping("/add/cavalry")
+    public String chooseCavalryWorkshopForm(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        List<CavalryWorkshop> cavalryWorkshopsToSelectFrom = cavalryWorkshopRepository.findAllByPlayer(player);
+        model.addAttribute("cavalryWorkshops", cavalryWorkshopsToSelectFrom);
+        return "choose-cavalryWorkshop-to-add-cavalry";
+    }
+    @PostMapping("/add/cavalry")
+    public String buyCavalry(@RequestParam("cavalryWorkshop") Long cavalryWorkshopId, Model model) {
+        CavalryWorkshop cavalryWorkshop = cavalryWorkshopRepository.findById(cavalryWorkshopId).orElse(null);
+        if (cavalryWorkshop == null) {
+            return "redirect:/add/cavalry";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        boolean doesPlayerGetCavalry = cavalryWorkshopService.addCavalry(player, cavalryWorkshop);
+        if (!doesPlayerGetCavalry) {
+            return "redirect:/add/cavalry";
+        }
+        //model.addAttribute("swordsmen", player.getSwordsmen());
         return "redirect:/home";
         //return "add-swordsman-success";
     }
