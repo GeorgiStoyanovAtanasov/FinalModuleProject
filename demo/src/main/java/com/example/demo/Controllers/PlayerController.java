@@ -81,18 +81,19 @@ public class PlayerController {
 
         // Check if player already exists by username
         if (playerRepository.findByUsername(player.getUsername()) != null) {
+            //here I changed the check because before it was playerRepository.findByUsername(player.getUsername()) == null
             // Handle case where player already exists
             return "register"; // Return to registration form
         }
         Player playerToSave = new Player();
         playerToSave.setUsername(player.getUsername());
         playerToSave.setPassword(passwordEncoder.encode(player.getPassword()));
-        // Create new instances of resources for the player
+        // Create instances of resources for the player
         Gold gold = new Gold();
         Silver silver = new Silver();
         Crystal crystal = new Crystal();
 
-        // Save resources to database
+        // Saved the resources to the database
         crystalRepository.save(crystal);
         goldRepository.save(gold);
         silverRepository.save(silver);
@@ -102,10 +103,10 @@ public class PlayerController {
         playerToSave.setSilver(silver);
         playerToSave.setCrystal(crystal);
 
-        // Set default role
+        // Set default role, the player musn't choose their role, ADMIN role must only ba assigned through the database
         playerToSave.setRole(Role.USER);
 
-        // Save player to database
+        // Save the player to database
         playerRepository.save(playerToSave);
         crystal.setPlayer(playerToSave);
         gold.setPlayer(playerToSave);
