@@ -56,4 +56,21 @@ public class PlayerController {
         model.addAttribute("swordsman", player.getSwordsmen().size());
         return "home";
     }
+//    @GetMapping("/register")
+//    public String registerForm(Model model) {
+//        return "register";
+//    }
+//
+//    @PostMapping("/register")
+//    public String registerPlayer(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("role") String role) {
+//        if (playerRepository.findByUsername(username) == null) {
+//            return "redirect:/register?error";
+//        }
+//        String encodedPassword = passwordEncoder.encode(password);
+//
+//        Player player = new Player(username, encodedPassword, role);
+//        playerRepository.save(player);
+//
+//        return "redirect:/login";
+//    }
 }
