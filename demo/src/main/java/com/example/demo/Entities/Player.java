@@ -46,7 +46,7 @@ public class Player {
     private Role role;
 
     private boolean isAttacked;
-    public Player() {
+    public Player(String username, String encodedPassword, String role) {
     }
     //private Player attackUser(Player user1, Player user2){
     //    //method body
