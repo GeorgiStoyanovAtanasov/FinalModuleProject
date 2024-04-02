@@ -20,13 +20,12 @@ public class CavalryWorkshopService {
 
     public boolean addCavalry(Player player, CavalryWorkshop cavalryWorkshop) {
         if (canPlayerGetCavalry(cavalryWorkshop)) {
-            Cavalry cavalry = new Cavalry(player);
-            cavalryRepository.save(cavalry);
-            player.getCavalry().add(cavalry);
-            playerRepository.save(player);
-            int goldAmount = player.getGold().getAmount();
-            if (goldAmount > 10) {
-                player.getGold().setAmount(goldAmount - 10);
+            int crystalAmount = player.getCrystal().getAmount();
+            if (crystalAmount > 5) {
+                Cavalry cavalry = new Cavalry(player);
+                cavalryRepository.save(cavalry);
+                player.getCavalries().add(cavalry);
+                player.getCrystal().setAmount(crystalAmount - 5);
                 playerRepository.save(player);
             }
             return true;

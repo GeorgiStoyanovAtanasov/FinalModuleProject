@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Battle result</title>
+</head>
+<body>
+<h1>Battle result</h1>
+<p>Играч 1: <span th:text="${player1}"></span> - Сила на армията: <span th:text="${player1Strength}"></span></p>
+<p>Играч 2: <span th:text="${player2}"></span> - Сила на армията: <span th:text="${player2Strength}"></span></p>
+<p>Победител: <span th:text="${winner}"></span></p>
+</body>
+</html>

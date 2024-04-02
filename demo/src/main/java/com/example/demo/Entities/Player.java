@@ -13,6 +13,7 @@ import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Validated
@@ -30,16 +31,14 @@ public class Player {
     @OneToMany(mappedBy = "player")
     private List<Swordsman> swordsmen;
     @OneToMany(mappedBy = "player")
-    private List<Cavalry> cavalry;
-
+    private List<Cavalry> cavalries;
     @OneToMany(mappedBy = "player")
     private List<ArcherWorkshop> archerWorkshops;
 
     @OneToMany(mappedBy = "player")
-    private List<CavalryWorkshop> cavalryWorkshops;
-
-    @OneToMany(mappedBy = "player")
     private List<SwordsmanWorkshop> swordsmanWorkshops;
+    @OneToMany(mappedBy = "player")
+    private List<CavalryWorkshop> cavalryWorkshops;
 
     @OneToOne(mappedBy = "player")
     private Gold gold;
@@ -68,12 +67,11 @@ public class Player {
     //    //method body
     //}
 
-    public Player(String username, String password, List<ArcherWorkshop> archerWorkshops, List<SwordsmanWorkshop> swordsmanWorkshops, List<CavalryWorkshop> cavalryWorkshops, Gold gold, Silver silver, Crystal crystal, boolean isAttacked, List<Archer> archer, List<Swordsman> swordsmen, Role role) {
+    public Player(String username, String password, List<ArcherWorkshop> archerWorkshops, List<SwordsmanWorkshop> swordsmanWorkshops, Gold gold, Silver silver, Crystal crystal, boolean isAttacked, List<Archer> archer, List<Swordsman> swordsmen, Role role) {
         this.username = username;
         this.password = password;
         this.archerWorkshops = archerWorkshops;
         this.swordsmanWorkshops = swordsmanWorkshops;
-        this.cavalryWorkshops = cavalryWorkshops;
         this.gold = gold;
         this.silver = silver;
         this.crystal = crystal;
@@ -117,6 +115,14 @@ public class Player {
 
     public List<SwordsmanWorkshop> getSwordsmanWorkshops() {
         return swordsmanWorkshops;
+    }
+
+    public List<CavalryWorkshop> getCavalryWorkshops() {
+        return cavalryWorkshops;
+    }
+
+    public void setCavalryWorkshops(List<CavalryWorkshop> cavalryWorkshops) {
+        this.cavalryWorkshops = cavalryWorkshops;
     }
 
     public void setSwordsmanWorkshops(List<SwordsmanWorkshop> swordsmanWorkshop) {
@@ -171,6 +177,14 @@ public class Player {
         this.swordsmen = swordsmen;
     }
 
+    public List<Cavalry> getCavalries() {
+        return cavalries;
+    }
+
+    public void setCavalries(List<Cavalry> cavalries) {
+        this.cavalries = cavalries;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -179,19 +193,17 @@ public class Player {
         this.role = role;
     }
 
-    public List<CavalryWorkshop> getCavalryWorkshops() {
-        return cavalryWorkshops;
-    }
-
-    public void setCavalryWorkshops(List<CavalryWorkshop> cavalryWorkshops) {
-        this.cavalryWorkshops = cavalryWorkshops;
-    }
-
-    public List<Cavalry> getCavalry() {
-        return cavalry;
-    }
-
-    public void setCavalry(List<Cavalry> cavalry) {
-        this.cavalry = cavalry;
+    public Object getArmySize() {
+        List<List<Archer>> archerSizes = new ArrayList<>();
+        archerSizes.add(archers);
+        List<List<Swordsman>> swordsmenSizes = new ArrayList<>();
+        swordsmenSizes.add(swordsmen);
+        List<List<Cavalry>> cavalriesSizes = new ArrayList<>();
+        cavalriesSizes.add(cavalries);
+//        armySizes.add(swordsmen);
+//        armySizes.add(cavalries);
+//        int totalArmySize = archerSizes.stream().mapToInt(Integer::intValue).sum();
+//        return totalArmySize;
+        return null;
     }
 }
