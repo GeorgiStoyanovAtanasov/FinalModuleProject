@@ -39,39 +39,21 @@ public class PlayerController {
         if (player == null || !passwordEncoder.matches(password, player.getPassword())) {
             return "login";
         }
-        return "redirect:/mine";
+        return "redirect:/home";
     }
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        model.addAttribute("username", player.getUsername());
+        model.addAttribute("gold", player.getGold().getAmount());
+        model.addAttribute("silver", player.getSilver().getAmount());
+        model.addAttribute("crystal", player.getCrystal().getAmount());
+        model.addAttribute("archerWorkshops", player.getArcherWorkshops().size());
+        model.addAttribute("swordsmanWorkshops", player.getSwordsmanWorkshops().size());
+        model.addAttribute("archers", player.getArchers().size());
+        model.addAttribute("swordsman", player.getSwordsmen().size());
         return "home";
     }
-//    @PostMapping("/admin/selectGoldMine")
-//    public String selectGoldMine(@RequestParam("goldMineId") Long goldMineId) {
-//        GoldMine selectedGoldMine = goldMineRepository.findById(goldMineId).orElse(null);
-//        if (selectedGoldMine != null) {
-//            ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
-//            if (chosenGoldMineEntity != null) {
-//                chosenGoldMineEntity.setCurrentGoldMine(selectedGoldMine);
-//                chosenGoldMineEntityRepository.save(chosenGoldMineEntity);
-//            }
-//        }
-//        return "redirect:/home";
-//    }
-//@GetMapping("/register")
-//public String registerForm(Model model) {
-//    return "register";
-//}
-//
-//    @PostMapping("/register")
-//    public String registerPlayer(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("role") String role) {
-//        if (playerRepository.existsByUsername(username)) {
-//            return "redirect:/register?error";
-//        }
-//        String encodedPassword = passwordEncoder.encode(password);
-//
-//        Player player = new Player(username, encodedPassword, role);
-//        playerRepository.save(player);
-//
-//        return "redirect:/login";
-//    }
 }

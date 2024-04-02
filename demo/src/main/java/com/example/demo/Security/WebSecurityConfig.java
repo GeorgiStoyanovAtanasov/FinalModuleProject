@@ -37,12 +37,13 @@ public class WebSecurityConfig {
                         .requestMatchers("/crystal/mine/success").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/add/archer").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/buy/workshop").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/add/swordsman").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/admin/selectGoldMine").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
-                        .defaultSuccessUrl("/mine")
+                        .defaultSuccessUrl("/home")
                 )
                 .logout((logout) -> logout.permitAll());
 
