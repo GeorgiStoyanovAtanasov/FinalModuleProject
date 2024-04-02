@@ -193,17 +193,5 @@ public class Player {
         this.role = role;
     }
 
-    public Object getArmySize() {
-        List<List<Archer>> archerSizes = new ArrayList<>();
-        archerSizes.add(archers);
-        List<List<Swordsman>> swordsmenSizes = new ArrayList<>();
-        swordsmenSizes.add(swordsmen);
-        List<List<Cavalry>> cavalriesSizes = new ArrayList<>();
-        cavalriesSizes.add(cavalries);
-//        armySizes.add(swordsmen);
-//        armySizes.add(cavalries);
-//        int totalArmySize = archerSizes.stream().mapToInt(Integer::intValue).sum();
-//        return totalArmySize;
-        return null;
-    }
+
 }
