@@ -1,17 +1,21 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Constants.Role;
 import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+import com.example.demo.Entities.Materials.Crystal;
+import com.example.demo.Entities.Materials.Gold;
+import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
-import com.example.demo.Repositories.GoldMineRepository;
-import com.example.demo.Repositories.PlayerRepository;
+import com.example.demo.Repositories.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,12 @@ public class PlayerController {
     PasswordEncoder passwordEncoder;
     @Autowired
     ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
+    @Autowired
+    GoldRepository goldRepository;
+    @Autowired
+    SilverRepository silverRepository;
+    @Autowired
+    CrystalRepository crystalRepository;
 
     @GetMapping("/login")
     public String loginForm() {
@@ -56,21 +66,53 @@ public class PlayerController {
         model.addAttribute("swordsman", player.getSwordsmen().size());
         return "home";
     }
-//    @GetMapping("/register")
-//    public String registerForm(Model model) {
-//        return "register";
-//    }
-//
-//    @PostMapping("/register")
-//    public String registerPlayer(@RequestParam("username") String username, @RequestParam("password") String password,@RequestParam("role") String role) {
-//        if (playerRepository.findByUsername(username) == null) {
-//            return "redirect:/register?error";
-//        }
-//        String encodedPassword = passwordEncoder.encode(password);
-//
-//        Player player = new Player(username, encodedPassword, role);
-//        playerRepository.save(player);
-//
-//        return "redirect:/login";
-//    }
+    @GetMapping("/register")
+    public String registerForm(Model model) {
+        model.addAttribute("player", new Player());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerPlayer(@Valid Player player, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            return "register"; // Return to registration form
+        }
+
+        // Check if player already exists by username
+        if (playerRepository.findByUsername(player.getUsername()) != null) {
+            // Handle case where player already exists
+            return "register"; // Return to registration form
+        }
+        Player playerToSave = new Player();
+        playerToSave.setUsername(player.getUsername());
+        playerToSave.setPassword(passwordEncoder.encode(player.getPassword()));
+        // Create new instances of resources for the player
+        Gold gold = new Gold();
+        Silver silver = new Silver();
+        Crystal crystal = new Crystal();
+
+        // Save resources to database
+        crystalRepository.save(crystal);
+        goldRepository.save(gold);
+        silverRepository.save(silver);
+
+        // Assign resources to the player
+        playerToSave.setGold(gold);
+        playerToSave.setSilver(silver);
+        playerToSave.setCrystal(crystal);
+
+        // Set default role
+        playerToSave.setRole(Role.USER);
+
+        // Save player to database
+        playerRepository.save(playerToSave);
+        crystal.setPlayer(playerToSave);
+        gold.setPlayer(playerToSave);
+        silver.setPlayer(playerToSave);
+        crystalRepository.save(crystal);
+        goldRepository.save(gold);
+        silverRepository.save(silver);
+        return "redirect:/login";
+    }
 }

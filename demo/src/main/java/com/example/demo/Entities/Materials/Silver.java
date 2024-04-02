@@ -14,7 +14,10 @@ public class Silver {
 
     public Silver() {
     }
-
+    public Silver(Player player){
+        this.player = player;
+        this.amount = 0;
+    }
     public Silver(int amount, Player player) {
         this.amount = amount;
         this.player = player;
