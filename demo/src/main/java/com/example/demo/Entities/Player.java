@@ -13,7 +13,6 @@ import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Validated
@@ -192,6 +191,4 @@ public class Player {
     public void setRole(Role role) {
         this.role = role;
     }
-
-
 }
