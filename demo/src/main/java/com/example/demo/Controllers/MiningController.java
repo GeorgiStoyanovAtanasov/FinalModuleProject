@@ -44,17 +44,7 @@ public class MiningController {
     }
     @GetMapping("/mine/gold")
     public String mineGod() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
-        GoldMine currentGoldMine = (chosenGoldMineEntity != null) ? chosenGoldMineEntity.getCurrentGoldMine() : null;
-        if (currentGoldMine != null && currentGoldMine.getMaterials(player, goldMineService)) {
-            playerRepository.save(player);
-            return "redirect:/gold/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+        return goldMineService.mineGold();
     }
     @GetMapping("/gold/mine/success")
     public String getGoldSuccessMessage(){
@@ -74,17 +64,7 @@ public class MiningController {
     }
     @GetMapping("/mine/silver")
     public String mineSilver() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenSilverMineEntity chosenSilverMineEntity = chosenSilverMineRepository.findById(1L).orElse(null);
-        SilverMine currentSilverMine = (chosenSilverMineEntity != null) ? chosenSilverMineEntity.getCurrentSilverMine() : null;
-        if (currentSilverMine != null && currentSilverMine.getMaterials(player, silverMineService)) {
-            playerRepository.save(player);
-            return "redirect:/silver/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+        return silverMineService.mineSilver();
     }
     @GetMapping("/silver/mine/success")
     public String getSilverSuccessMessage(){
@@ -92,17 +72,7 @@ public class MiningController {
     }
     @GetMapping("/mine/crystal")
     public String mineCrystal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
-        CrystalMine currentCrystalMine = (chosenCrystalMineEntity != null) ? chosenCrystalMineEntity.getCurrentCrystalMine() : null;
-        if (currentCrystalMine != null && currentCrystalMine.getMaterials(player, crystalMineService)) {
-            playerRepository.save(player);
-            return "redirect:/crystal/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+        return crystalMineService.mineCrystal();
     }
     @GetMapping("/crystal/mine/success")
     public String getCrystalSuccessMessage(){

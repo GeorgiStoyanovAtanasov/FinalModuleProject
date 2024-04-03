@@ -7,7 +7,10 @@ import com.example.demo.Repositories.ArcherRepository;
 import com.example.demo.Repositories.ArcherWorkshopRepository;
 import com.example.demo.Repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 
@@ -19,6 +22,22 @@ public class ArcherWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     ArcherRepository archerRepository;
+    public String buyArcher(Long archerWorkshopId, Model model){
+        ArcherWorkshop archerWorkshop = archerWorkshopRepository.findById(archerWorkshopId).orElse(null);
+        if (archerWorkshop == null) {
+            return "redirect:/add/archer";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        boolean doesPlayerGetArcher = addArcher(player, archerWorkshop);
+        if (!doesPlayerGetArcher) {
+            return "redirect:/add/archer";
+        }
+        model.addAttribute("archers", player.getArchers());
+        return "redirect:/home";
+        //return "add-archer-success";
+    }
 
     public boolean addArcher(Player player, ArcherWorkshop archerWorkshop) {
         if (canPlayerGetArcher(archerWorkshop)) {

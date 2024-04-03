@@ -7,7 +7,10 @@ import com.example.demo.Entities.Workshops.ArcherWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import com.example.demo.Repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 
@@ -19,6 +22,22 @@ public class SwordsmanWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     SwordsmanRepository swordsmanRepository;
+    public String buySwordsman(Long swordsmanWorkshopId, Model model){
+        SwordsmanWorkshop swordsmanWorkshop = swordsmanWorkshopRepository.findById(swordsmanWorkshopId).orElse(null);
+        if (swordsmanWorkshop == null) {
+            return "redirect:/add/swordsman";
+        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        boolean doesPlayerGetSwordsman = addSwordsman(player, swordsmanWorkshop);
+        if (!doesPlayerGetSwordsman) {
+            return "redirect:/add/swordsman";
+        }
+        model.addAttribute("swordsmen", player.getSwordsmen());
+        return "redirect:/home";
+        //return "add-swordsman-success";
+    }
 
     public boolean addSwordsman(Player player, SwordsmanWorkshop swordsmanWorkshop) {
         if (canPlayerGetSwordsman(swordsmanWorkshop)) {
