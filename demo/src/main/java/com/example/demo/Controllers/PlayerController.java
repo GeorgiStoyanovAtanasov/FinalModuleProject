@@ -2,12 +2,16 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Constants.Role;
 import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Fighters.Cavalry;
+import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Materials.Crystal;
 import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
 import com.example.demo.Repositories.*;
+import com.example.demo.Services.AttackService;
 import com.example.demo.Services.PlayerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,14 @@ public class PlayerController {
     CrystalRepository crystalRepository;
     @Autowired
     PlayerService playerService;
+    @Autowired
+    ArcherRepository archerRepository;
+    @Autowired
+    SwordsmanRepository swordsmanRepository;
+    @Autowired
+    CavalryRepository cavalryRepository;
+    @Autowired
+    AttackService attackService;
 
     @GetMapping("/login")
     public String loginForm() {
@@ -56,6 +68,7 @@ public class PlayerController {
     }
     @GetMapping("/home")
     public String home(Model model) {
+        //int[] adjustedValues = attackService.adjustNumbers(-1, 1, 0, Archer.value, Swordsman.value, Cavalry.value);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Player player = playerRepository.findByUsername(username);
@@ -66,9 +79,9 @@ public class PlayerController {
         model.addAttribute("archerWorkshops", player.getArcherWorkshops().size());
         model.addAttribute("swordsmanWorkshops", player.getSwordsmanWorkshops().size());
         model.addAttribute("cavalryWorkshops", player.getCavalryWorkshops().size());
-        model.addAttribute("archers", player.getArchers().size());
-        model.addAttribute("swordsman", player.getSwordsmen().size());
-        model.addAttribute("cavalries", player.getCavalries().size());
+        model.addAttribute("archers", archerRepository.findAllByPlayerAndInBattle(player,false).size());
+        model.addAttribute("swordsman", swordsmanRepository.findAllByPlayerAndInBattle(player,false).size());
+        model.addAttribute("cavalries", cavalryRepository.findAllByPlayerAndInBattle(player,false).size());
         return "home";
     }
     @GetMapping("/register")

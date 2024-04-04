@@ -12,7 +12,7 @@ public class Crystal {
     private Player player;
     private int amount;
 
-    public Crystal(int i) {
+    public Crystal() {
     }
     public Crystal(Player player){
         this.player = player;

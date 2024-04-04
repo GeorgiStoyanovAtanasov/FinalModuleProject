@@ -10,23 +10,20 @@ public class Cavalry {
     private Long id;
     @ManyToOne
     private Player player;
-
-    private int value;
+    @Column(columnDefinition = "integer default 5")
+    public static final int value = 5;
+    private boolean inBattle;
 
     public Cavalry() {
     }
 
     public Cavalry(Player player) {
         this.player = player;
-        this.value = 5;
+        this.inBattle = false;
     }
 
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public Long getId() {
@@ -43,6 +40,14 @@ public class Cavalry {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isInBattle() {
+        return inBattle;
+    }
+
+    public void setInBattle(boolean inBattle) {
+        this.inBattle = inBattle;
     }
 }
 

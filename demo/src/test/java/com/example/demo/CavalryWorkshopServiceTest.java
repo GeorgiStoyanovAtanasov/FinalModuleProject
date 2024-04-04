@@ -1,9 +1,11 @@
 package com.example.demo;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Materials.Crystal;
+import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Repositories.CavalryRepository;
@@ -15,11 +17,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.ui.Model;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -45,13 +49,17 @@ public class CavalryWorkshopServiceTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void testBuyCavalrySuccess() {
         Long cavalryWorkshopId = 1L;
         CavalryWorkshop cavalryWorkshop = new CavalryWorkshop();
         cavalryWorkshop.setId(cavalryWorkshopId);
         Player player = new Player();
         player.setUsername("testUser");
-        player.setCrystal(new Crystal(10));
+        player.setCavalry(new ArrayList<>());
+        Crystal crystal = new Crystal();
+        crystal.setAmount(20);
+        player.setCrystal(crystal);
 
         Authentication authentication = mock(Authentication.class);
         when(authentication.getName()).thenReturn("testUser");
@@ -109,7 +117,6 @@ public class CavalryWorkshopServiceTest {
         assertEquals(1, player.getCavalries().size());
         assertEquals(5, player.getCrystal().getAmount());
     }
-
 
 
 }

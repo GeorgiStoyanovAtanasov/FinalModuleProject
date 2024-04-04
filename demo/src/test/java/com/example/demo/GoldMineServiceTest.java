@@ -35,7 +35,7 @@ public class GoldMineServiceTest {
     private GoldMineService goldMineService;
 
     @Test
-    void testMineGold_Success() {
+    void testMineGoldSuccess() {
         // Arrange
         GoldMine goldMine = new GoldMine();
         goldMine.setValue(10);

@@ -3,6 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e0d3a7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        select {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            width: 150px;
+        }
+
+        .btn-submit {
+            background-color: #8b4513;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #654321;
+        }
+    </style>
 </head>
 <body>
 <h1>Choose Archer Workshop:</h1>
@@ -14,7 +49,11 @@
         </select>
     </div>
     <div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-submit">Add Archer</button>
+    </div>
+    <br>
+    <div align="center">
+        <a href="/home" class="btn btn-submit">Home</a>
     </div>
 </form>
 </body>

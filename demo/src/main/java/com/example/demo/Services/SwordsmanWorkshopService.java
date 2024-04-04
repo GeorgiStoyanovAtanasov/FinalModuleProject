@@ -22,6 +22,10 @@ public class SwordsmanWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     SwordsmanRepository swordsmanRepository;
+
+    public SwordsmanWorkshopService(SwordsmanWorkshopRepository swordsmanWorkshopRepository, PlayerRepository playerRepository, SwordsmanRepository swordsmanRepository) {
+    }
+
     public String buySwordsman(Long swordsmanWorkshopId, Model model){
         SwordsmanWorkshop swordsmanWorkshop = swordsmanWorkshopRepository.findById(swordsmanWorkshopId).orElse(null);
         if (swordsmanWorkshop == null) {
