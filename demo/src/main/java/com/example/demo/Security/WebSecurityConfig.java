@@ -53,6 +53,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/register").permitAll()
+                        .requestMatchers("/attack").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN") // Allow access to defend endpoint
                         .requestMatchers("/defend").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN") // Allow access to defend endpoint
                         .requestMatchers("/mine").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/home").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
@@ -73,10 +74,10 @@ public class WebSecurityConfig {
                         .permitAll()
                         .defaultSuccessUrl("/home")
                 )
-                .logout((logout) -> logout.permitAll())
-                .exceptionHandling((exceptionHandling) -> exceptionHandling
-                        .accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
-                );
+                .logout((logout) -> logout.permitAll());
+                //.exceptionHandling((exceptionHandling) -> exceptionHandling
+                //        .accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
+                //);
 
         return http.build();
     }

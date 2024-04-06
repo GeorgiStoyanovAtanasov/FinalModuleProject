@@ -3,20 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e0d3a7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        select {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            width: 200px;
+        }
+
+        button {
+            background-color: #8b4513;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #654321;
+        }
+
+        .btn-home {
+            background-color: #8b4513;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-home:hover {
+            background-color: #654321;
+        }
+    </style>
 </head>
 <body>
 <h1>Choose workshop to buy:</h1>
 <form action="#" th:action="@{/buy/workshop}" method="post">
-<div>
-    <select name="workshopType">
-        <option th:value="archer">Archer Workshop</option>
-        <option th:value="swordsman">Swordsman Workshop</option>
-        <option th:value="cavalry">Cavalry Workshop</option>
-    </select>
-</div>
     <div>
-        <button type="submit">Submit</button>
+        <select name="workshopType">
+            <option th:value="archer">Archer Workshop</option>
+            <option th:value="swordsman">Swordsman Workshop</option>
+            <option th:value="cavalry">Cavalry Workshop</option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Add Workshop</button>
     </div>
 </form>
+<br>
+<div align="center">
+    <a href="/home" class="btn-home">Home</a>
+</div>
 </body>
 </html>
