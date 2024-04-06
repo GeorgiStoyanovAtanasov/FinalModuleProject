@@ -32,8 +32,9 @@ public class WorkshopService {
         if (playerGold > price) {
             player.getGold().setAmount(playerGold - price);
             archerWorkshopRepository.save(new ArcherWorkshop(player));
+            return "redirect:/home";
         }
-        return "redirect:/home";
+        return "redirect:/buy/workshop";
     }
 
     public String buySwordsmanWorkshop(Player player) {
@@ -42,8 +43,9 @@ public class WorkshopService {
         if (playerSilver > price) {
             player.getSilver().setAmount(playerSilver - price);
             swordsmanWorkshopRepository.save(new SwordsmanWorkshop(player));
+            return "redirect:/home";
         }
-        return "redirect:/home";
+        return "redirect:/buy/workshop";
     }
 
     public String buyCavalryWorkshop(Player player) {
@@ -52,7 +54,8 @@ public class WorkshopService {
         if (playerCrystal > price) {
             player.getCrystal().setAmount(playerCrystal - price);
             cavalryWorkshopRepository.save(new CavalryWorkshop(player));
+            return "redirect:/home";
         }
-        return "redirect:/home";
+        return "redirect:/buy/workshop";
     }
 }

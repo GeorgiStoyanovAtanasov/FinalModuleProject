@@ -10,23 +10,21 @@ public class Archer {
     private Long id;
     @ManyToOne
     private Player player;
-
-    private int value;
+    @Column(columnDefinition = "integer default 2")
+    public static final int value = 2;
+    private boolean inBattle;
 
     public Archer() {
     }
 
     public Archer(Player player) {
         this.player = player;
-        this.value = 2;
+        this.inBattle = false;
     }
+
 
     public int getValue() {
         return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public Long getId() {
@@ -43,5 +41,13 @@ public class Archer {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public boolean isInBattle() {
+        return inBattle;
+    }
+
+    public void setInBattle(boolean inBattle) {
+        this.inBattle = inBattle;
     }
 }
