@@ -68,26 +68,6 @@ public class AttackService {
             return "choose-player-to-attack";
         }
         return attackPart2(player, playerToBeAttack, numberOfArchers, numberOfSwordsmen, numberOfCavalries);
-//        List<Archer> archerToAttackWith = new ArrayList<>();
-//        for (int i = 0; i < numberOfArchers; i++) {
-//            archerToAttackWith.add(archerRepository.findAllByPlayerAndInBattle(player, false).get(i));
-//            archerRepository.findAllByPlayerAndInBattle(player, false).get(i).setInBattle(true);
-//        }
-//        List<Swordsman> swordsmenToAttackWith = new ArrayList<>();
-//        for (int i = 0; i < numberOfSwordsmen; i++) {
-//            swordsmenToAttackWith.add(swordsmanRepository.findAllByPlayerAndInBattle(player, false).get(i));
-//            swordsmanRepository.findAllByPlayerAndInBattle(player, false).get(i).setInBattle(true);
-//        }
-//        List<Cavalry> cavalriesToAttackWith = new ArrayList<>();
-//        for (int i = 0; i < numberOfCavalries; i++) {
-//            cavalriesToAttackWith.add(cavalryRepository.findAllByPlayerAndInBattle(player, false).get(i));
-//            cavalryRepository.findAllByPlayerAndInBattle(player, false).get(i).setInBattle(true);
-//        }
-//        playerToBeAttack.setAttacked(true);
-//        playerRepository.save(playerToBeAttack);
-//        playerRepository.save(player);
-//        attackRepository.save(new Attack(player, archerToAttackWith, swordsmenToAttackWith, cavalriesToAttackWith, playerToBeAttack));
-//        return "attack-success";
     }
 
     public String attackPart2(Player player, Player playerToBeAttack, int numberOfArchers, int numberOfSwordsmen, int numberOfCavalries) {
@@ -201,10 +181,6 @@ public class AttackService {
             defenderPlayer.setAttacked(false);
             return "redirect:/home";
         }
-//        int defenderArcherStrength = archerRepository.findAllByPlayerAndInBattle(attack.getDefender(), false).size() * Archer.value;
-//        int defenderSwordsmanStrength = swordsmanRepository.findAllByPlayerAndInBattle(attack.getDefender(), false).size() * Swordsman.value;
-//        int defenderCavalryStrength = cavalryRepository.findAllByPlayerAndInBattle(attack.getDefender(), false).size() * Cavalry.value;
-//        int totalDefenderValue = defenderArcherStrength + defenderSwordsmanStrength + defenderCavalryStrength;
         int totalDefenderValue = calculateTotalDefenderValue(attack);
         if (totalDefenderValue < calculateAttackStrength(attack)) {
             int archersLeft = attack.getArchersUsed().size() - attack.getDefender().getArchers().size();
@@ -217,45 +193,6 @@ public class AttackService {
             swordsmenLeft = adjustedValues[1];
             cavalriesLeft = adjustedValues[2];
             return transferResources(attack, archersLeft, swordsmenLeft, cavalriesLeft, model);
-//            attack.getAttacker().getGold().setAmount(attack.getAttacker().getGold().getAmount() + attack.getDefender().getGold().getAmount());
-//            attack.getDefender().getGold().setAmount(0);
-//            attack.getAttacker().getSilver().setAmount(attack.getAttacker().getSilver().getAmount() + attack.getDefender().getSilver().getAmount());
-//            attack.getDefender().getSilver().setAmount(0);
-//            attack.getAttacker().getCrystal().setAmount(attack.getAttacker().getCrystal().getAmount() + attack.getDefender().getCrystal().getAmount());
-//            attack.getDefender().getCrystal().setAmount(0);
-//            for (int i = 0; i < attack.getDefender().getArcherWorkshops().size(); i++) {
-//                attack.getDefender().getArcherWorkshops().get(i).setPlayer(attack.getAttacker());
-//                //attack.getAttacker().getArcherWorkshops().add(attack.getDefender().getArcherWorkshops().get(i));
-//            }
-//            //attack.getDefender().getArcherWorkshops().clear();
-//            for (int i = 0; i < attack.getDefender().getSwordsmanWorkshops().size(); i++) {
-//                //attack.getAttacker().getSwordsmanWorkshops().add(attack.getDefender().getSwordsmanWorkshops().get(i));
-//                attack.getDefender().getSwordsmanWorkshops().get(i).setPlayer(attack.getAttacker());
-//            }
-//            //attack.getDefender().getSwordsmanWorkshops().clear();
-//            for (int i = 0; i < attack.getDefender().getCavalryWorkshops().size(); i++) {
-//                attack.getDefender().getCavalryWorkshops().get(i).setPlayer(attack.getAttacker());
-//            }
-//            for (int i = 0; i < archersLeft; i++) {
-//                attack.getArchersUsed().get(i).setInBattle(false);
-//                //attack.getAttacker().getArchers().add(attack.getArchersUsed().get(i));
-//            }
-//            for (int i = 0; i < swordsmenLeft; i++) {
-//                attack.getSwordsmenUsed().get(i).setInBattle(false);
-//                //attack.getAttacker().getSwordsmen().add(attack.getSwordsmenUsed().get(i));
-//            }
-//            for (int i = 0; i < cavalriesLeft; i++) {
-//                attack.getCavalriesUsed().get(i).setInBattle(false);
-//                //attack.getAttacker().getCavalries().add(attack.getCavalriesUsed().get(i));
-//            }
-//            deletePlayerEntities(attack.getDefender());
-//            //attack.getDefender().getCavalryWorkshops().clear();
-//            attack.getDefender().setAttacked(false);
-//            playerRepository.save(attack.getAttacker());
-//            playerRepository.save(attack.getDefender());
-//            model.addAttribute("player", attack.getAttacker().getUsername());
-//            attackRepository.delete(attack);
-//            return "defeat";
         }
 
 
@@ -266,9 +203,6 @@ public class AttackService {
         model.addAttribute("archers", attack.getArchersUsed().size());
         model.addAttribute("swordsmen", attack.getSwordsmenUsed().size());
         model.addAttribute("cavalries", attack.getCavalriesUsed().size());
-//        model.addAttribute("archersToChooseFrom", archerRepository.findAllByPlayerAndInBattle(attack.getDefender(), false));
-//        model.addAttribute("swordsmenToChooseFrom", swordsmanRepository.findAllByPlayerAndInBattle(attack.getDefender(), false));
-//        model.addAttribute("cavalriesToChooseFrom", cavalryRepository.findAllByPlayerAndInBattle(attack.getAttacker(), false));
         return "defend";
     }
 
@@ -356,42 +290,6 @@ public class AttackService {
             cavalryRepository.findAllByPlayerAndInBattle(defenderPlayer, false).get(i).setInBattle(true);
         }
         return battle(archersToDefendWith, swordsmenToDefendWith, cavalriesToDefendWith, attack, defenderPlayer);
-//        int defenderArcherStrength = archersToDefendWith.size() * Archer.value;
-//        int defenderSwordsmanStrength = swordsmenToDefendWith.size() * Swordsman.value;
-//        int defenderCavalryStrength = cavalriesToDefendWith.size() * Cavalry.value;
-//        int totalDefenderValue = defenderArcherStrength + defenderSwordsmanStrength + defenderCavalryStrength;
-//        if (totalDefenderValue < calculateAttackStrength(attack)) {
-//            return "redirect:/defend";
-//            //return "defend";
-//        }
-//        int archersLeft = archersToDefendWith.size() - attack.getArchersUsed().size();
-//        int swordsmenLeft = swordsmenToDefendWith.size() - attack.getSwordsmenUsed().size();
-//        int cavalriesLeft = cavalriesToDefendWith.size() - attack.getCavalriesUsed().size();
-//        int[] adjustedValues = adjustNumbers(archersLeft, swordsmenLeft, cavalriesLeft, Archer.value, Swordsman.value, Cavalry.value);
-//        archersLeft = adjustedValues[0];
-//        swordsmenLeft = adjustedValues[1];
-//        cavalriesLeft = adjustedValues[2];
-//        for (int i = 0; i < archersLeft; i++) {
-//            archersToDefendWith.get(i).setInBattle(false);
-//            //defenderPlayer.getArchers().add(archersToDefendWith.get(i));
-//        }
-//        for (int i = 0; i < swordsmenLeft; i++) {
-//            swordsmenToDefendWith.get(i).setInBattle(false);
-//            //defenderPlayer.getSwordsmen().add(swordsmenToDefendWith.get(i));
-//        }
-//        for (int i = 0; i < cavalriesLeft; i++) {
-//            cavalriesToDefendWith.get(i).setInBattle(false);
-//            //attack.getAttacker().getCavalries().add(attack.getCavalriesUsed().get(i));
-//        }
-//        Iterable<Archer> archersToDelete = attack.getArchersUsed();
-//        Iterable<Swordsman> swordsmenToDelete = attack.getSwordsmenUsed();
-//        Iterable<Cavalry> cavalriesToDelete = attack.getCavalriesUsed();
-//        attackRepository.delete(attack);
-//        deleteOnlyTheEntitiesOfAnAttackThatHasBeenCountered(archersToDelete, swordsmenToDelete, cavalriesToDelete);
-//        defenderPlayer.setAttacked(false);
-//        playerRepository.save(defenderPlayer);
-//        playerRepository.save(attack.getAttacker());
-//        return "redirect:/home";
     }
 
     public String battle(List<Archer> archersToDefendWith, List<Swordsman> swordsmenToDefendWith, List<Cavalry> cavalriesToDefendWith, Attack attack, Player defenderPlayer) {
