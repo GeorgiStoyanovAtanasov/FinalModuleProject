@@ -292,6 +292,42 @@ public class AttackService {
         return battle(archersToDefendWith, swordsmenToDefendWith, cavalriesToDefendWith, attack, defenderPlayer);
     }
 
-
-
+    public String battle(List<Archer> archersToDefendWith, List<Swordsman> swordsmenToDefendWith, List<Cavalry> cavalriesToDefendWith, Attack attack, Player defenderPlayer) {
+        int defenderArcherStrength = archersToDefendWith.size() * Archer.value;
+        int defenderSwordsmanStrength = swordsmenToDefendWith.size() * Swordsman.value;
+        int defenderCavalryStrength = cavalriesToDefendWith.size() * Cavalry.value;
+        int totalDefenderValue = defenderArcherStrength + defenderSwordsmanStrength + defenderCavalryStrength;
+        if (totalDefenderValue < calculateAttackStrength(attack)) {
+            return "redirect:/defend";
+            //return "defend";
+        }
+        int archersLeft = archersToDefendWith.size() - attack.getArchersUsed().size();
+        int swordsmenLeft = swordsmenToDefendWith.size() - attack.getSwordsmenUsed().size();
+        int cavalriesLeft = cavalriesToDefendWith.size() - attack.getCavalriesUsed().size();
+        int[] adjustedValues = adjustNumbers(archersLeft, swordsmenLeft, cavalriesLeft, Archer.value, Swordsman.value, Cavalry.value);
+        archersLeft = adjustedValues[0];
+        swordsmenLeft = adjustedValues[1];
+        cavalriesLeft = adjustedValues[2];
+        for (int i = 0; i < archersLeft; i++) {
+            archersToDefendWith.get(i).setInBattle(false);
+            //defenderPlayer.getArchers().add(archersToDefendWith.get(i));
+        }
+        for (int i = 0; i < swordsmenLeft; i++) {
+            swordsmenToDefendWith.get(i).setInBattle(false);
+            //defenderPlayer.getSwordsmen().add(swordsmenToDefendWith.get(i));
+        }
+        for (int i = 0; i < cavalriesLeft; i++) {
+            cavalriesToDefendWith.get(i).setInBattle(false);
+            //attack.getAttacker().getCavalries().add(attack.getCavalriesUsed().get(i));
+        }
+        Iterable<Archer> archersToDelete = attack.getArchersUsed();
+        Iterable<Swordsman> swordsmenToDelete = attack.getSwordsmenUsed();
+        Iterable<Cavalry> cavalriesToDelete = attack.getCavalriesUsed();
+        attackRepository.delete(attack);
+        transactionalService.deleteOnlyTheEntitiesOfAnAttackThatHasBeenCountered(archersToDelete, swordsmenToDelete, cavalriesToDelete);
+        defenderPlayer.setAttacked(false);
+        playerRepository.save(defenderPlayer);
+        playerRepository.save(attack.getAttacker());
+        return "redirect:/home";
+    }
 }

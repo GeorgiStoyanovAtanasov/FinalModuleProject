@@ -2,7 +2,6 @@ package com.example.demo.Services;
 
 import com.example.demo.Entities.Fighters.Archer;
 import com.example.demo.Entities.Fighters.Swordsman;
-import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
@@ -17,14 +16,16 @@ import java.time.LocalDate;
 
 @Service
 public class SwordsmanWorkshopService {
-
-
     @Autowired
     SwordsmanWorkshopRepository swordsmanWorkshopRepository;
     @Autowired
     PlayerRepository playerRepository;
     @Autowired
     SwordsmanRepository swordsmanRepository;
+
+    public SwordsmanWorkshopService(SwordsmanWorkshopRepository swordsmanWorkshopRepository, PlayerRepository playerRepository, SwordsmanRepository swordsmanRepository) {
+    }
+
     public String buySwordsman(Long swordsmanWorkshopId, Model model){
         SwordsmanWorkshop swordsmanWorkshop = swordsmanWorkshopRepository.findById(swordsmanWorkshopId).orElse(null);
         if (swordsmanWorkshop == null) {
@@ -67,6 +68,12 @@ public class SwordsmanWorkshopService {
         } else {
             return false;
         }
+    }
+
+    public void setPlayerRepository(PlayerRepository playerRepository) {
+    }
+
+    public void setSwordsmanRepository(SwordsmanRepository swordsmanRepository) {
     }
 }
 
