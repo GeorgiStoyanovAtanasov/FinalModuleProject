@@ -56,6 +56,8 @@ public class SwordsmanWorkshopServiceTest {
         SwordsmanWorkshopService swordsmanWorkshopService = new SwordsmanWorkshopService(swordsmanWorkshopRepository, playerRepository, swordsmanRepository);
         SwordsmanWorkshop swordsmanWorkshop = new SwordsmanWorkshop();
         swordsmanWorkshop.setId(1L);
+        swordsmanWorkshopService.setPlayerRepository(playerRepository);
+        swordsmanWorkshopService.setSwordsmanRepository(swordsmanRepository);
 
 
 
