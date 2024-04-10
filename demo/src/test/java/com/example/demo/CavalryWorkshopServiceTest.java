@@ -56,7 +56,7 @@ public class CavalryWorkshopServiceTest {
         cavalryWorkshop.setId(cavalryWorkshopId);
         Player player = new Player();
         player.setUsername("testUser");
-        player.setCavalry(new ArrayList<>());
+//        player.setCavalry(new ArrayList<>());
         Crystal crystal = new Crystal();
         crystal.setAmount(20);
         player.setCrystal(crystal);

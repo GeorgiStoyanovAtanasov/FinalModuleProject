@@ -53,11 +53,11 @@ public class SwordsmanWorkshopServiceTest {
 
         when(playerRepository.findByUsername(anyString())).thenReturn(player);
 
-        SwordsmanWorkshopService swordsmanWorkshopService = new SwordsmanWorkshopService(swordsmanWorkshopRepository, playerRepository, swordsmanRepository);
+//        SwordsmanWorkshopService swordsmanWorkshopService = new SwordsmanWorkshopService(swordsmanWorkshopRepository, playerRepository, swordsmanRepository);
         SwordsmanWorkshop swordsmanWorkshop = new SwordsmanWorkshop();
         swordsmanWorkshop.setId(1L);
-        swordsmanWorkshopService.setPlayerRepository(playerRepository);
-        swordsmanWorkshopService.setSwordsmanRepository(swordsmanRepository);
+//        swordsmanWorkshopService.setPlayerRepository(playerRepository);
+//        swordsmanWorkshopService.setSwordsmanRepository(swordsmanRepository);
 
 
 

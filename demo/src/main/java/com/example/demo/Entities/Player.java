@@ -172,7 +172,7 @@ public class Player {
         return swordsmen;
     }
 
-    public void setSwordsman(List<Swordsman> swordsmen) {
+    public void setSwordsmen(List<Swordsman> swordsmen) {
         this.swordsmen = swordsmen;
     }
 
@@ -180,7 +180,7 @@ public class Player {
         return cavalries;
     }
 
-    public void setCavalry(List<Cavalry> cavalries) {
+    public void setCavalries(List<Cavalry> cavalries) {
         this.cavalries = cavalries;
     }
 

@@ -22,10 +22,6 @@ public class SwordsmanWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     SwordsmanRepository swordsmanRepository;
-
-    public SwordsmanWorkshopService(SwordsmanWorkshopRepository swordsmanWorkshopRepository, PlayerRepository playerRepository, SwordsmanRepository swordsmanRepository) {
-    }
-
     public String buySwordsman(Long swordsmanWorkshopId, Model model){
         SwordsmanWorkshop swordsmanWorkshop = swordsmanWorkshopRepository.findById(swordsmanWorkshopId).orElse(null);
         if (swordsmanWorkshop == null) {
@@ -68,12 +64,6 @@ public class SwordsmanWorkshopService {
         } else {
             return false;
         }
-    }
-
-    public void setPlayerRepository(PlayerRepository playerRepository) {
-    }
-
-    public void setSwordsmanRepository(SwordsmanRepository swordsmanRepository) {
     }
 }
 
