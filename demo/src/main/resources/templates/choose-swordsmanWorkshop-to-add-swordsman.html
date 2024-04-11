@@ -44,9 +44,18 @@
 <form action="#" th:action="@{/add/swordsman}" method="post">
     <div>
         <select name="swordsmanWorkshop">
-            <option th:each="swordsmanWorkshop : ${swordsmanWorkshops}" th:value="${swordsmanWorkshop.id}" th:text="${swordsmanWorkshop.id}">Swordsman Workshop:
+            <option th:each="swordsmanWorkshop : ${swordsmanWorkshops}" th:value="${swordsmanWorkshop.id}" th:text="${swordsmanWorkshop.lastAccessDate != null ? 'Swordsman Workshop: ' + swordsmanWorkshop.lastAccessDate : 'No last access date'}">Swordsman Workshop:
             </option>
         </select>
+    </div>
+    <div th:if="${notEnoughSilver}">
+        <p th:text="${notEnoughSilver}" style="color: red;"></p>
+    </div>
+    <div th:if="${timeLimit}">
+        <p th:text="${timeLimit}" style="color: red;"></p>
+    </div>
+    <div th:if="${nulll}">
+        <p th:text="${nulll}" style="color: red;"></p>
     </div>
     <div>
         <button type="submit" class="btn btn-submit">Add Swordsman</button>

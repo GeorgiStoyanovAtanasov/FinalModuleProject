@@ -30,6 +30,7 @@ public class WebSecurityConfig {
     private PlayerRepository playerRepository;
     @Autowired
     private IsAttackedFilter isAttackedFilter;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new PlayerDetailsServiceImpl();
@@ -39,6 +40,7 @@ public class WebSecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, accessDeniedException) -> {
@@ -67,20 +69,26 @@ public class WebSecurityConfig {
                         .requestMatchers("/buy/workshop").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/add/swordsman").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers("/add/cavalry").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
-                        .requestMatchers("/admin/selectGoldMine").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/logout").hasAnyAuthority("USER", "ADMIN", "ROLE_USER", "ROLE_ADMIN")
+        //.requestMatchers("/admin/selectGoldMine").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                 )
                 .formLogin((form) -> form
                         .loginPage("/login")
                         .permitAll()
                         .defaultSuccessUrl("/home")
-                )
-                .logout((logout) -> logout.permitAll());
-                //.exceptionHandling((exceptionHandling) -> exceptionHandling
-                //        .accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
-                //);
+                //.failureUrl("/login?error")
+        )
+                .logout((logout) -> logout
+                        .logoutUrl("/logout")
+                        .permitAll()
+                );
+        //.exceptionHandling((exceptionHandling) -> exceptionHandling
+        //        .accessDeniedHandler(accessDeniedHandler()) // Set custom access denied handler
+        //);
 
         return http.build();
     }
+
     // Check if player is attacked and redirect if necessary
     private void checkPlayerAttacked(HttpSecurity http) {
         Player player = getPlayer(); // Get the current player (implement this method)

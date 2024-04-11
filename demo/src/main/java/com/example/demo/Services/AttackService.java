@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,21 +52,29 @@ public class AttackService {
     public String attack(Long playerToAttackId,
                          int numberOfArchers,
                          int numberOfSwordsmen,
-                         int numberOfCavalries) {
+                         int numberOfCavalries, RedirectAttributes redirectAttributes) {
+        if(numberOfArchers < 0 || numberOfSwordsmen < 0 || numberOfCavalries < 0){
+            redirectAttributes.addFlashAttribute("notSmart", "Don't try to play tricks.");
+            return "redirect:/attack";
+        }
         Player playerToBeAttack = playerRepository.findById(playerToAttackId).orElse(null);
         if (playerToBeAttack == null) {
-            return "choose-player-to-attack";
+            redirectAttributes.addFlashAttribute("noDefender", "no such player found.");
+            return "redirect:/attack";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Player player = playerRepository.findByUsername(authentication.getName());
         if (numberOfArchers > archerRepository.findAllByPlayerAndInBattle(player, false).size()) {
-            return "choose-player-to-attack";
+            redirectAttributes.addFlashAttribute("lessArchers", "your archers available are less than you request.");
+            return "redirect:/attack";
         }
         if (numberOfSwordsmen > swordsmanRepository.findAllByPlayerAndInBattle(player, false).size()) {
-            return "choose-player-to-attack";
+            redirectAttributes.addFlashAttribute("lessSwordsmen", "your swordsmen available are less than you request.");
+            return "redirect:/attack";
         }
         if (numberOfCavalries > cavalryRepository.findAllByPlayerAndInBattle(player, false).size()) {
-            return "choose-player-to-attack";
+            redirectAttributes.addFlashAttribute("lessCavalries", "your cavalries available are less than you request.");
+            return "redirect:/attack";
         }
         return attackPart2(player, playerToBeAttack, numberOfArchers, numberOfSwordsmen, numberOfCavalries);
     }
@@ -203,6 +212,9 @@ public class AttackService {
         model.addAttribute("archers", attack.getArchersUsed().size());
         model.addAttribute("swordsmen", attack.getSwordsmenUsed().size());
         model.addAttribute("cavalries", attack.getCavalriesUsed().size());
+        model.addAttribute("defendersArchers", archerRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size());
+        model.addAttribute("defendersSwordsmen", swordsmanRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size());
+        model.addAttribute("defendersCavalries", cavalryRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size());
         return "defend";
     }
 
@@ -253,7 +265,7 @@ public class AttackService {
 
     public String defend(int numberOfArchers,
                          int numberOfSwordsmen,
-                         int numberOfCavalries, Model model) {
+                         int numberOfCavalries, Model model, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Player defenderPlayer = playerRepository.findByUsername(authentication.getName());
         Attack attack = attackRepository.findByDefender(defenderPlayer);
@@ -263,14 +275,17 @@ public class AttackService {
             return "redirect:/home";
         }
         if (numberOfArchers > archerRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size()) {
+            redirectAttributes.addFlashAttribute("lessArchers", "your archers available are less than you request.");
             return "redirect:/defend";
             //return "defend";
         }
         if (numberOfSwordsmen > swordsmanRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size()) {
+            redirectAttributes.addFlashAttribute("lessSwordsmen", "your swordsmen available are less than you request.");
             return "redirect:/defend";
             //return "defend";
         }
         if (numberOfCavalries > cavalryRepository.findAllByPlayerAndInBattle(defenderPlayer, false).size()) {
+            redirectAttributes.addFlashAttribute("lessCavalries", "your cavalries available are less than you request.");
             return "redirect:/defend";
             //return "defend";
         }
@@ -289,15 +304,16 @@ public class AttackService {
             cavalriesToDefendWith.add(cavalryRepository.findAllByPlayerAndInBattle(defenderPlayer, false).get(i));
             cavalryRepository.findAllByPlayerAndInBattle(defenderPlayer, false).get(i).setInBattle(true);
         }
-        return battle(archersToDefendWith, swordsmenToDefendWith, cavalriesToDefendWith, attack, defenderPlayer);
+        return battle(archersToDefendWith, swordsmenToDefendWith, cavalriesToDefendWith, attack, defenderPlayer, redirectAttributes);
     }
 
-    public String battle(List<Archer> archersToDefendWith, List<Swordsman> swordsmenToDefendWith, List<Cavalry> cavalriesToDefendWith, Attack attack, Player defenderPlayer) {
+    public String battle(List<Archer> archersToDefendWith, List<Swordsman> swordsmenToDefendWith, List<Cavalry> cavalriesToDefendWith, Attack attack, Player defenderPlayer, RedirectAttributes redirectAttributes) {
         int defenderArcherStrength = archersToDefendWith.size() * Archer.value;
         int defenderSwordsmanStrength = swordsmenToDefendWith.size() * Swordsman.value;
         int defenderCavalryStrength = cavalriesToDefendWith.size() * Cavalry.value;
         int totalDefenderValue = defenderArcherStrength + defenderSwordsmanStrength + defenderCavalryStrength;
         if (totalDefenderValue < calculateAttackStrength(attack)) {
+            redirectAttributes.addFlashAttribute("notEnoughStrength", "not enough manpower, come on, don't be stingy.");
             return "redirect:/defend";
             //return "defend";
         }

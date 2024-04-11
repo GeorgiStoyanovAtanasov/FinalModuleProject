@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -53,8 +54,8 @@ public class FighterController {
     }
 
     @PostMapping("/add/archer")
-    public String buyArcher(@RequestParam(name = "archerWorkshop", required = false) Long archerWorkshopId, Model model) {
-        return archerWorkshopService.buyArcher(archerWorkshopId, model);
+    public String buyArcher(@RequestParam(name = "archerWorkshop", required = false) Long archerWorkshopId, Model model, RedirectAttributes redirectAttributes) {
+        return archerWorkshopService.buyArcher(archerWorkshopId, model, redirectAttributes);
     }
     @GetMapping("/add/swordsman")
     public String chooseSwordsmanWorkshopForm(Model model) {
@@ -66,8 +67,8 @@ public class FighterController {
         return "choose-swordsmanWorkshop-to-add-swordsman";
     }
     @PostMapping("/add/swordsman")
-    public String buySwordsman(@RequestParam(name = "swordsmanWorkshop", required = false) Long swordsmanWorkshopId, Model model) {
-        return swordsmanWorkshopService.buySwordsman(swordsmanWorkshopId, model);
+    public String buySwordsman(@RequestParam(name = "swordsmanWorkshop", required = false) Long swordsmanWorkshopId, Model model,  RedirectAttributes redirectAttributes) {
+        return swordsmanWorkshopService.buySwordsman(swordsmanWorkshopId, model, redirectAttributes);
     }
     @GetMapping("/add/cavalry")
     public String chooseCavalryWorkshopForm(Model model) {
@@ -79,7 +80,7 @@ public class FighterController {
         return "choose-cavalryWorkshop-to-add-cavalry";
     }
     @PostMapping("/add/cavalry")
-    public String buyCavalry(@RequestParam(name = "cavalryWorkshop", required = false) Long cavalryWorkshopId, Model model) {
-        return cavalryWorkshopService.buyCavalry(cavalryWorkshopId, model);
+    public String buyCavalry(@RequestParam(name = "cavalryWorkshop", required = false) Long cavalryWorkshopId, Model model, RedirectAttributes redirectAttributes) {
+        return cavalryWorkshopService.buyCavalry(cavalryWorkshopId, model, redirectAttributes);
     }
 }

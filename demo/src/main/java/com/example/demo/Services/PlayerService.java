@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
 @Service
@@ -27,9 +28,10 @@ public class PlayerService {
     SilverRepository silverRepository;
     @Autowired
     CrystalRepository crystalRepository;
-    public String registerPlayer(Player player, BindingResult bindingResult) {
+    public String registerPlayer(Player player, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             // Handle validation errors
+            model.addAttribute("usernameError", "username already in use");
             return "register"; // Return to registration form
         }
 
@@ -37,6 +39,7 @@ public class PlayerService {
         if (playerRepository.findByUsername(player.getUsername()) != null) {
             //here I changed the check because before it was playerRepository.findByUsername(player.getUsername()) == null
             // Handle case where player already exists
+            model.addAttribute("usernameError", "username already in use");
             return "register"; // Return to registration form
         }
         Player playerToSave = new Player();

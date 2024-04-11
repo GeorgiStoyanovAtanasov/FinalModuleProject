@@ -52,7 +52,10 @@
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" th:field="*{password}">
         </div>
-        <button type="submit" class="btn btn-block">Submit</button>
+        <div th:if="${usernameError}" class="error-message" style="color: red; text-align: center;">
+            <p th:text="${usernameError}"></p>
+        </div>
+        <button type="submit" class="btn btn-block">Sign up</button>
     </form>
     <div class="form-group"><a href="http://localhost:8080/login">Sign in:</a></div>
 </div>

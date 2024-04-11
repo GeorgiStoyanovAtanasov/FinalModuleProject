@@ -61,6 +61,15 @@
             <option th:value="cavalry">Cavalry Workshop</option>
         </select>
     </div>
+    <div th:if="${notEnoughSilver}">
+        <p th:text="${notEnoughSilver}" style="color: red;"></p>
+    </div>
+    <div th:if="${notEnoughGold}">
+        <p th:text="${notEnoughGold}" style="color: red;"></p>
+    </div>
+    <div th:if="${notEnoughCrystal}">
+        <p th:text="${notEnoughCrystal}" style="color: red;"></p>
+    </div>
     <div>
         <button type="submit">Add Workshop</button>
     </div>

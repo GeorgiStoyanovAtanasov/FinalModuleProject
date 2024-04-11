@@ -45,8 +45,8 @@ public class CrystalMine {
     public void setLastAccessDates(Map<Player, LocalDate> lastAccessDates) {
         this.lastAccessDates = lastAccessDates;
     }
-    public boolean getMaterials(Player player, CrystalMineService crystalMineService) {
-        return crystalMineService.getMaterials(this, player);
+    public void getMaterials(Player player, CrystalMineService crystalMineService) {
+        crystalMineService.getMaterials(this, player);
     }
 
     public boolean canPlayerGetMaterials(Player player, CrystalMineService crystalMineService) {
