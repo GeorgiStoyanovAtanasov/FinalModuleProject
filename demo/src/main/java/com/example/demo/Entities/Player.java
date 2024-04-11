@@ -13,7 +13,10 @@ import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @Entity
@@ -51,6 +54,25 @@ public class Player {
     private Role role;
 
     private boolean isAttacked;
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_gold_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "gold_mine_id")
+    private Map<LocalDate, Long> lastAccessedGoldMines = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_silver_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "silver_mine_id")
+    private Map<LocalDate, Long> lastAccessedSilverMines = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_crystal_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "crystal_mine_id")
+    private Map<LocalDate, Long> lastAccessedCrystalMines = new HashMap<>();
+
     public Player() {
     }
 
@@ -190,5 +212,27 @@ public class Player {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Map<LocalDate, Long> getLastAccessedGoldMines() {
+        return lastAccessedGoldMines;
+    }
+
+    public void setLastAccessedGoldMines(Map<LocalDate, Long> lastAccessedGoldMines) {
+        this.lastAccessedGoldMines = lastAccessedGoldMines;
+    }
+    public Map<LocalDate, Long> getLastAccessedSilverMines() {
+        return lastAccessedSilverMines;
+    }
+
+    public void setLastAccessedSilverMines(Map<LocalDate, Long> lastAccessedSilverMines) {
+        this.lastAccessedSilverMines = lastAccessedSilverMines;
+    }
+    public Map<LocalDate, Long> getLastAccessedCrystalMines() {
+        return lastAccessedCrystalMines;
+    }
+
+    public void setLastAccessedCrystalMines(Map<LocalDate, Long> lastAccessedCrystalMines) {
+        this.lastAccessedCrystalMines = lastAccessedCrystalMines;
     }
 }

@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 @Controller
 public class MiningController {
     @Autowired
@@ -43,36 +45,36 @@ public class MiningController {
         return "mine-choice";
     }
     @GetMapping("/mine/gold")
-    public String mineGod() {
-        return goldMineService.mineGold();
+    public String mineGod(RedirectAttributes redirectAttributes) {
+        return goldMineService.mineGold(redirectAttributes);
     }
     @GetMapping("/gold/mine/success")
     public String getGoldSuccessMessage(){
         return "gold-success-message";
     }
-    @GetMapping("/admin/selectGoldMine")
-    public String selectGoldMine() {
-        GoldMine selectedGoldMine = goldMineRepository.findById(2L).orElse(null);
-        if (selectedGoldMine != null) {
-            ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
-            if (chosenGoldMineEntity != null) {
-                chosenGoldMineEntity.setCurrentGoldMine(selectedGoldMine);
-                chosenGoldMineEntityRepository.save(chosenGoldMineEntity);
-            }
-        }
-        return "redirect:/home";
-    }
+//    @GetMapping("/admin/selectGoldMine")
+//    public String selectGoldMine() {
+//        GoldMine selectedGoldMine = goldMineRepository.findById(2L).orElse(null);
+//        if (selectedGoldMine != null) {
+//            ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
+//            if (chosenGoldMineEntity != null) {
+//                chosenGoldMineEntity.setCurrentGoldMine(selectedGoldMine);
+//                chosenGoldMineEntityRepository.save(chosenGoldMineEntity);
+//            }
+//        }
+//        return "redirect:/home";
+//    }
     @GetMapping("/mine/silver")
-    public String mineSilver() {
-        return silverMineService.mineSilver();
+    public String mineSilver(RedirectAttributes redirectAttributes) {
+        return silverMineService.mineSilver(redirectAttributes);
     }
     @GetMapping("/silver/mine/success")
     public String getSilverSuccessMessage(){
         return "silver-success-message";
     }
     @GetMapping("/mine/crystal")
-    public String mineCrystal() {
-        return crystalMineService.mineCrystal();
+    public String mineCrystal(RedirectAttributes redirectAttributes) {
+        return crystalMineService.mineCrystal(redirectAttributes);
     }
     @GetMapping("/crystal/mine/success")
     public String getCrystalSuccessMessage(){

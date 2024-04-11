@@ -44,9 +44,15 @@
 <form action="#" th:action="@{/add/cavalry}" method="post">
     <div>
         <select name="cavalryWorkshop">
-            <option th:each="cavalryWorkshop : ${cavalryWorkshops}" th:value="${cavalryWorkshop.id}" th:text="${cavalryWorkshop.id}">Cavalry Workshop:
+            <option th:each="cavalryWorkshop : ${cavalryWorkshops}" th:value="${cavalryWorkshop.id}" th:text="${cavalryWorkshop.lastAccessDate != null ? 'Cavalry Workshop: ' + cavalryWorkshop.lastAccessDate : 'No last access date'}">Cavalry Workshop:
             </option>
         </select>
+    </div>
+    <div th:if="${notEnoughCrystal}">
+        <p th:text="${notEnoughCrystal}" style="color: red;"></p>
+    </div>
+    <div th:if="${timeLimit}">
+        <p th:text="${timeLimit}" style="color: red;"></p>
     </div>
     <div>
         <button type="submit" class="btn btn-submit">Add Cavalry</button>

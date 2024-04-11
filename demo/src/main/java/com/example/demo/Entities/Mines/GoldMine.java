@@ -43,8 +43,8 @@ public class GoldMine {
         this.value = value;
     }
 
-    public boolean getMaterials(Player player, GoldMineService goldMineService) {
-        return goldMineService.getMaterials(this, player);
+    public void getMaterials(Player player, GoldMineService goldMineService) {
+        goldMineService.getMaterials(this, player);
     }
 
     public boolean canPlayerGetMaterials(Player player, GoldMineService goldMineService) {

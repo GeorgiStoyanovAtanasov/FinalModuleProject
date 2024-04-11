@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import com.example.demo.Entities.Fighters.Archer;
 import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.CavalryWorkshop;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 
@@ -20,7 +22,10 @@ public class CavalryWorkshopService {
     PlayerRepository playerRepository;
     @Autowired
     CavalryRepository cavalryRepository;
-    public String buyCavalry(Long cavalryWorkshopId, Model model){
+    public String buyCavalry(Long cavalryWorkshopId, Model model, RedirectAttributes redirectAttributes){
+        if(cavalryWorkshopId == null){
+            return "redirect:/add/cavalry";
+        }
         CavalryWorkshop cavalryWorkshop = cavalryWorkshopRepository.findById(cavalryWorkshopId).orElse(null);
         if (cavalryWorkshop == null) {
             return "redirect:/add/cavalry";
@@ -28,28 +33,37 @@ public class CavalryWorkshopService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Player player = playerRepository.findByUsername(username);
-        boolean doesPlayerGetCavalry = addCavalry(player, cavalryWorkshop);
-        if (!doesPlayerGetCavalry) {
-            return "redirect:/add/cavalry";
-        }
-        //model.addAttribute("swordsmen", player.getSwordsmen());
-        return "redirect:/home";
-        //return "add-swordsman-success";
+//        boolean doesPlayerGetCavalry = addCavalry(player, cavalryWorkshop);
+//        if (!doesPlayerGetCavalry) {
+//            return "redirect:/add/cavalry";
+//        }
+//        //model.addAttribute("swordsmen", player.getSwordsmen());
+//        return "redirect:/home";
+//        //return "add-swordsman-success";
+        return addCavalry(player, cavalryWorkshop, redirectAttributes);
     }
 
-    public boolean addCavalry(Player player, CavalryWorkshop cavalryWorkshop) {
-        if (canPlayerGetCavalry(cavalryWorkshop)) {
-            int crystalAmount = player.getCrystal().getAmount();
-            if (crystalAmount > 5) {
+    public String addCavalry(Player player, CavalryWorkshop cavalryWorkshop, RedirectAttributes redirectAttributes) {
+        int crystalAmount = player.getCrystal().getAmount();
+        if (crystalAmount >= 5 ) {
+            if (canPlayerGetCavalry(cavalryWorkshop)) {
                 Cavalry cavalry = new Cavalry(player);
                 cavalryRepository.save(cavalry);
                 player.getCavalries().add(cavalry);
                 player.getCrystal().setAmount(crystalAmount - 5);
                 playerRepository.save(player);
+                return "redirect:/home";
+            } else {
+                //model.addAttribute("notEnoughGold", "not enough gold to buy an archer.");
+                //return "choose-archerWorkshop-to-add-archer";
+                redirectAttributes.addFlashAttribute("timeLimit", "you can't make any more cavalries from this workshop, consider buying another one.");
+                return "redirect:/add/cavalry";
             }
-            return true;
         }
-        return false;
+        //model.addAttribute("timeLimit", "you can't make any more archers from this workshop, consider buying another one.");
+        //return "choose-archerWorkshop-to-add-archer";
+        redirectAttributes.addFlashAttribute("notEnoughCrystal", "not enough crystal to buy a cavalry.");
+        return "redirect:/add/cavalry";
     }
 
     public synchronized boolean canPlayerGetCavalry(CavalryWorkshop cavalryWorkshop) {

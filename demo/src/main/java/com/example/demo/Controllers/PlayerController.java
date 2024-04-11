@@ -13,11 +13,14 @@ import com.example.demo.Entities.Player;
 import com.example.demo.Repositories.*;
 import com.example.demo.Services.AttackService;
 import com.example.demo.Services.PlayerService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PlayerController {
@@ -52,6 +56,7 @@ public class PlayerController {
     CavalryRepository cavalryRepository;
     @Autowired
     AttackService attackService;
+    SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     @GetMapping("/login")
     public String loginForm() {
@@ -59,12 +64,24 @@ public class PlayerController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public String login(@RequestParam("username") String username, @RequestParam("password") String password, Model model, RedirectAttributes redirectAttributes) {
         Player player = playerRepository.findByUsername(username);
         if (player == null || !passwordEncoder.matches(password, player.getPassword())) {
-            return "login";
+            redirectAttributes.addFlashAttribute("wrongCredentials", "wrong credentials");
+            return "/login";
         }
         return "redirect:/home";
+    }
+//    @GetMapping("/login?error")
+//    public String loginError(Model model) {
+//        model.addAttribute("wrongCredentials", true);
+//        return "login";
+//    }
+
+    @GetMapping("/logout")
+    public String performLogout(Authentication authentication, HttpServletRequest request, HttpServletResponse response) {
+        this.logoutHandler.logout(request, response, authentication);//.doLogout(request, response, authentication);
+        return "redirect:/login";
     }
     @GetMapping("/home")
     public String home(Model model) {
@@ -91,7 +108,7 @@ public class PlayerController {
     }
 
     @PostMapping("/register")
-    public String registerPlayer(@Valid Player player, BindingResult bindingResult) {
-        return playerService.registerPlayer(player, bindingResult);
+    public String registerPlayer(@Valid Player player, BindingResult bindingResult, Model model) {
+        return playerService.registerPlayer(player, bindingResult, model);
     }
 }

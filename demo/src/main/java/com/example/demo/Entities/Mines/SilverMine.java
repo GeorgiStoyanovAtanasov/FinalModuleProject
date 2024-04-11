@@ -45,8 +45,8 @@ public class SilverMine {
         this.value = value;
     }
 
-    public boolean getMaterials(Player player, SilverMineService silverMineService) {
-        return silverMineService.getMaterials(this, player);
+    public void getMaterials(Player player, SilverMineService silverMineService) {
+        silverMineService.getMaterials(this, player);
     }
 
     public boolean canPlayerGetMaterials(Player player, SilverMineService silverMineService) {

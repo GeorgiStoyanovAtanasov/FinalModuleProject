@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class WorkshopController {
@@ -34,17 +35,17 @@ public class WorkshopController {
         return "choose-workshop";
     }
     @PostMapping("/buy/workshop")
-    public String buyWorkshop(@RequestParam("workshopType") String workshopType) {
+    public String buyWorkshop(@RequestParam("workshopType") String workshopType, RedirectAttributes redirectAttributes) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Player player = playerRepository.findByUsername(username);
         if (workshopType.equals("archer")) {
-            return workshopService.buyArcherWorkshop(player);
+            return workshopService.buyArcherWorkshop(player, redirectAttributes);
         } else if (workshopType.equals("swordsman")) {
-            return workshopService.buySwordsmanWorkshop(player);
+            return workshopService.buySwordsmanWorkshop(player, redirectAttributes);
         } else if (workshopType.equals("cavalry")) {
-            return workshopService.buyCavalryWorkshop(player);
+            return workshopService.buyCavalryWorkshop(player, redirectAttributes);
         }
-        return "choose-workshop";
+        return "redirect:/buy/workshop";
     }
 }

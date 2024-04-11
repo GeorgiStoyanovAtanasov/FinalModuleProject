@@ -81,6 +81,21 @@
         <label for="numberOfCavalries">Number of cavalries to attack with:</label>
         <input type="number" name="numberOfCavalries" id="numberOfCavalries">
     </div>
+    <div th:if="${notSmart}">
+        <p th:text="${notSmart}" style="color: red;"></p>
+    </div>
+    <div th:if="${noDefender}">
+        <p th:text="${noDefender}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessArchers}">
+        <p th:text="${lessArchers}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessSwordsmen}">
+        <p th:text="${lessSwordsmen}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessCavalries}">
+        <p th:text="${lessCavalries}" style="color: red;"></p>
+    </div>
     <div>
         <button type="submit" class="btn btn-submit">Attack</button>
     </div>

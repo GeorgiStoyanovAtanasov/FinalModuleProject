@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +44,8 @@ public class BattleController {
     public String attack(@RequestParam(name = "playerToAttack", required = false) Long playerToAttackId,
                          @RequestParam(name = "numberOfArchers", required = false, defaultValue = "0") int numberOfArchers,
                          @RequestParam(name = "numberOfSwordsmen", required = false, defaultValue = "0") int numberOfSwordsmen,
-                         @RequestParam(name = "numberOfCavalries", required = false, defaultValue = "0") int numberOfCavalries) {
-        return attackService.attack(playerToAttackId, numberOfArchers, numberOfSwordsmen, numberOfCavalries);
+                         @RequestParam(name = "numberOfCavalries", required = false, defaultValue = "0") int numberOfCavalries, RedirectAttributes redirectAttributes) {
+        return attackService.attack(playerToAttackId, numberOfArchers, numberOfSwordsmen, numberOfCavalries, redirectAttributes);
     }
 
     @GetMapping("/defend")
@@ -55,7 +56,7 @@ public class BattleController {
     @PostMapping("/defend")
     public String defend(@RequestParam(name = "numberOfArchers", required = false, defaultValue = "0") int numberOfArchers,
                          @RequestParam(name = "numberOfSwordsmen", required = false, defaultValue = "0") int numberOfSwordsmen,
-                         @RequestParam(name = "numberOfCavalries", required = false, defaultValue = "0") int numberOfCavalries, Model model) {
-        return attackService.defend(numberOfArchers, numberOfSwordsmen, numberOfCavalries, model);
+                         @RequestParam(name = "numberOfCavalries", required = false, defaultValue = "0") int numberOfCavalries, Model model, RedirectAttributes redirectAttributes) {
+        return attackService.defend(numberOfArchers, numberOfSwordsmen, numberOfCavalries, model, redirectAttributes);
     }
 }
