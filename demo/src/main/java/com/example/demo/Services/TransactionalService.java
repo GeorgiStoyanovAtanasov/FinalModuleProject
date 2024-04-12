@@ -19,12 +19,12 @@ public class TransactionalService {
     SwordsmanRepository swordsmanRepository;
     @Autowired
     CavalryRepository cavalryRepository;
-    @Transactional
-    public void deletePlayerEntities(Player player) {
-        archerRepository.deleteAllByPlayer(player);
-        swordsmanRepository.deleteAllByPlayer(player);
-        cavalryRepository.deleteAllByPlayer(player);
-    }
+//    @Transactional
+//    public void deletePlayerEntities(Player player) {
+//        archerRepository.deleteAllByPlayer(player);
+//        swordsmanRepository.deleteAllByPlayer(player);
+//        cavalryRepository.deleteAllByPlayer(player);
+//    }
 
     @Transactional
     public void deleteOnlyTheEntitiesOfAnAttackThatHasBeenCountered(Iterable<Archer> archers, Iterable<Swordsman> swordsmen, Iterable<Cavalry> cavalries) {
