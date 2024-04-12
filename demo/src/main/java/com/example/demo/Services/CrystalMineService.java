@@ -1,8 +1,8 @@
 package com.example.demo.Services;
 
-import com.example.demo.Entities.ChosenMines.ChosenCrystalMineEntity;
-import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
-import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenCrystalMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
 import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
@@ -21,8 +21,8 @@ import java.util.Map;
 public class CrystalMineService {
     @Autowired
     PlayerRepository playerRepository;
-    @Autowired
-    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
+//    @Autowired
+//    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
     @Autowired
     CrystalMineRepository crystalMineRepository;
     @Autowired
@@ -87,7 +87,7 @@ public class CrystalMineService {
 
     public CrystalMine getNextCrystalMine(CrystalMine crystalMine) {
         // Retrieve the current chosen gold mine entity
-        ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
+        //ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
         if (crystalMine != null) {
             // Retrieve the next gold mine in the sequence
             Long nextCrystalMineId = crystalMine.getId() + 1;

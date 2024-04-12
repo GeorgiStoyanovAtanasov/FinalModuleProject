@@ -1,7 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Constants.Role;
-import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
 import com.example.demo.Entities.Fighters.Archer;
 import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Fighters.Swordsman;
@@ -38,8 +38,8 @@ public class PlayerController {
     PlayerRepository playerRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
+//    @Autowired
+//    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
     @Autowired
     GoldRepository goldRepository;
     @Autowired

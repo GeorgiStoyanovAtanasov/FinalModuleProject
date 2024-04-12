@@ -3,7 +3,7 @@ package com.example.demo;
 import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
+//import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
 import com.example.demo.Repositories.GoldMineRepository;
 import com.example.demo.Repositories.PlayerRepository;
 import com.example.demo.Services.GoldMineService;
@@ -39,8 +39,8 @@ public class GoldMineServiceTests {
     PlayerRepository playerRepository;
     @Mock
     LastAccessedGoldMineService lastAccessedGoldMineService;
-    @Mock
-    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
+//    @Mock
+//    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
     @InjectMocks
     GoldMineService goldMineService;
 
@@ -64,7 +64,7 @@ public class GoldMineServiceTests {
         goldMine.setId(1L);
         when(goldMineRepository.findById(1L)).thenReturn(Optional.of(goldMine));
         when(playerRepository.findByUsername(anyString())).thenReturn(player);
-        when(chosenGoldMineEntityRepository.findById(anyLong())).thenReturn(Optional.empty());
+        //when(chosenGoldMineEntityRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         String viewName = goldMineService.mineGold(redirectAttributes);
 
