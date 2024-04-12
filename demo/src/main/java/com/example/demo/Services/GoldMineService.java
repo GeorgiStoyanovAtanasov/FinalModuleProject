@@ -1,11 +1,11 @@
 package com.example.demo.Services;
 
-import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
 import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenCrystalMineEntityRepository;
-import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
+//import com.example.demo.Repositories.ChosenCrystalMineEntityRepository;
+//import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
 import com.example.demo.Repositories.GoldMineRepository;
 import com.example.demo.Repositories.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ import java.util.Map;
 public class GoldMineService {
     @Autowired
     PlayerRepository playerRepository;
-    @Autowired
-    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
+//    @Autowired
+//    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
     @Autowired
     GoldMineRepository goldMineRepository;
     @Autowired
@@ -87,7 +87,7 @@ public class GoldMineService {
 
     public GoldMine getNextGoldMine(GoldMine goldMine) {
         // Retrieve the current chosen gold mine entity
-        ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
+        //ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
         if (goldMine != null) {
             // Retrieve the next gold mine in the sequence
             Long nextGoldMineId = goldMine.getId() + 1;

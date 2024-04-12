@@ -152,13 +152,13 @@ public class AttackServiceTests {
         when(attack.getSwordsmenUsed()).thenReturn(List.of(new Swordsman()));
         when(attack.getCavalriesUsed()).thenReturn(List.of(new Cavalry(), new Cavalry(), new Cavalry()));
 
-        // Create an instance of the service
+
         AttackService attackService = new AttackService();
 
-        // Calculate the attack strength
+
         int attackStrength = attackService.calculateAttackStrength(attack);
 
-        // Verify the result
+
         assertEquals(2 * Archer.value + 1 * Swordsman.value + 3 * Cavalry.value, attackStrength);
     }
 

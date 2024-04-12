@@ -5,8 +5,8 @@ import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
-import com.example.demo.Repositories.ChosenSilverMineRepository;
+//import com.example.demo.Repositories.ChosenGoldMineEntityRepository;
+//import com.example.demo.Repositories.ChosenSilverMineRepository;
 import com.example.demo.Repositories.PlayerRepository;
 import com.example.demo.Repositories.SilverMineRepository;
 import com.example.demo.Services.GoldMineService;
@@ -43,8 +43,8 @@ public class SilverMineServiceTests {
     PlayerRepository playerRepository;
     @Mock
     LastAccessedSilverMineService lastAccessedSilverMineService;
-    @Mock
-    ChosenSilverMineRepository chosenSilverMineRepository;
+//    @Mock
+//    ChosenSilverMineRepository chosenSilverMineRepository;
     @InjectMocks
     SilverMineService silverMineService;
 
@@ -68,7 +68,7 @@ public class SilverMineServiceTests {
         silverMine.setId(1L);
         when(silverMineRepository.findById(1L)).thenReturn(Optional.of(silverMine));
         when(playerRepository.findByUsername(anyString())).thenReturn(player);
-        when(chosenSilverMineRepository.findById(anyLong())).thenReturn(Optional.empty());
+        //when(chosenSilverMineRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         String viewName = silverMineService.mineSilver(redirectAttributes);
 

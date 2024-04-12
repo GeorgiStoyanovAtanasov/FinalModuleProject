@@ -1,7 +1,7 @@
 package com.example.demo.Services;
 
-import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
-import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
 import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
@@ -20,8 +20,8 @@ import java.util.Map;
 public class SilverMineService {
     @Autowired
     PlayerRepository playerRepository;
-    @Autowired
-    ChosenSilverMineRepository chosenSilverMineRepository;
+//    @Autowired
+//    ChosenSilverMineRepository chosenSilverMineRepository;
     @Autowired
     SilverMineRepository silverMineRepository;
     @Autowired
@@ -86,7 +86,7 @@ public class SilverMineService {
 
     public SilverMine getNextSilverMine(SilverMine silverMine) {
         // Retrieve the current chosen gold mine entity
-        ChosenSilverMineEntity chosenSilverMineEntity = chosenSilverMineRepository.findById(1L).orElse(null);
+        //ChosenSilverMineEntity chosenSilverMineEntity = chosenSilverMineRepository.findById(1L).orElse(null);
         if (silverMine != null) {
             // Retrieve the next gold mine in the sequence
             Long nextSilverMineId = silverMine.getId() + 1;

@@ -39,7 +39,8 @@ public class BattleController {
     public String attackFrom(Model model) {
         return attackService.attackFrom(model);
     }
-
+//model.addAttribute("hello", "hello world!")
+    //
     @PostMapping("/attack")
     public String attack(@RequestParam(name = "playerToAttack", required = false) Long playerToAttackId,
                          @RequestParam(name = "numberOfArchers", required = false, defaultValue = "0") int numberOfArchers,

@@ -5,7 +5,7 @@ import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Player;
-import com.example.demo.Repositories.ChosenCrystalMineEntityRepository;
+//import com.example.demo.Repositories.ChosenCrystalMineEntityRepository;
 import com.example.demo.Repositories.CrystalMineRepository;
 import com.example.demo.Repositories.PlayerRepository;
 import com.example.demo.Services.CrystalMineService;
@@ -40,8 +40,8 @@ public class CrystalMineServiceTests {
     PlayerRepository playerRepository;
     @Mock
     LastAccessedCrystalMineService lastAccessedCrystalMineService;
-    @Mock
-    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
+//    @Mock
+//    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
     @InjectMocks
     CrystalMineService crystalMineService;
 
@@ -64,7 +64,7 @@ public class CrystalMineServiceTests {
         crystalMine.setId(1L);
         when(crystalMineRepository.findById(1L)).thenReturn(Optional.of(crystalMine));
         when(playerRepository.findByUsername(anyString())).thenReturn(player);
-        when(chosenCrystalMineEntityRepository.findById(anyLong())).thenReturn(Optional.empty());
+        //when(chosenCrystalMineEntityRepository.findById(anyLong())).thenReturn(Optional.empty());
 
         String viewName = crystalMineService.mineCrystal(redirectAttributes);
 
