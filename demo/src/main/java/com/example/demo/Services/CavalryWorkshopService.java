@@ -24,6 +24,7 @@ public class CavalryWorkshopService {
     CavalryRepository cavalryRepository;
     public String buyCavalry(Long cavalryWorkshopId, Model model, RedirectAttributes redirectAttributes){
         if(cavalryWorkshopId == null){
+            redirectAttributes.addFlashAttribute("null", "no workshop selected.");
             return "redirect:/add/cavalry";
         }
         CavalryWorkshop cavalryWorkshop = cavalryWorkshopRepository.findById(cavalryWorkshopId).orElse(null);

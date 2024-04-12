@@ -23,6 +23,11 @@ public class GoldMine {
     private Map<Player, LocalDate> lastAccessDates = new HashMap<>();
     public GoldMine() {
     }
+
+    public GoldMine(int value) {
+        this.value = value;
+    }
+
     public Map<Player, LocalDate> getLastAccessDates() {
         return lastAccessDates;
     }

@@ -188,6 +188,7 @@ public class AttackService {
         Attack attack = attackRepository.findByDefender(defenderPlayer);
         if (attack == null) {
             defenderPlayer.setAttacked(false);
+            playerRepository.save(defenderPlayer);
             return "redirect:/home";
         }
         int totalDefenderValue = calculateTotalDefenderValue(attack);

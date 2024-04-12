@@ -25,6 +25,10 @@ public class SilverMine {
     public SilverMine() {
     }
 
+    public SilverMine(int value) {
+        this.value = value;
+    }
+
     public Map<Player, LocalDate> getLastAccessDates() {
         return lastAccessDates;
     }

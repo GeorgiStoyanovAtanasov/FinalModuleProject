@@ -22,6 +22,11 @@ public class CrystalMine {
     private Map<Player, LocalDate> lastAccessDates = new HashMap<>();
     public CrystalMine() {
     }
+
+    public CrystalMine(int value) {
+        this.value = value;
+    }
+
     public Map<Player, LocalDate> getLastAccessDates() {
         return lastAccessDates;
     }
