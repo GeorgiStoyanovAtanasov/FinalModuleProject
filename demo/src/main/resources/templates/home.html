@@ -47,6 +47,32 @@
             margin-bottom: 20px;
         }
 
+        .btn-link {
+             color: #fff;
+            background-color: #795548;
+            border-color: #795548;
+            cursor: pointer;
+        }
+
+        .btn-link:hover {
+            background-color: #c5b8b2;
+            border-color: #4c3526;
+            color: #4c3526;
+        }
+
+        .btn-action {
+            color: #fff;
+            background-color: #795548;
+            border-color: #795548;
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            background-color: #5d4037;
+            border-color: #5d4037;
+            color: #fff;
+        }
+
         @media (max-width: 768px) {
             .info-box {
                 width: 100%;
@@ -64,21 +90,31 @@
         <p><strong>Gold:</strong> <span th:text="${gold}"></span></p>
         <p><strong>Silver:</strong> <span th:text="${silver}"></span></p>
         <p><strong>Crystal:</strong> <span th:text="${crystal}"></span></p>
-        <a href="/buy/workshop">Buy Workshop</a>
+        <a href="/mine" class="btn btn-link">Mine</a>
     </div>
     <div class="info-box">
         <h3>Your Workshops:</h3>
         <p><strong>Archer Workshops:</strong> <span th:text="${archerWorkshops}"></span></p>
         <p><strong>Swordsman Workshops:</strong> <span th:text="${swordsmanWorkshops}"></span></p>
-        <a href="/mine">Mine</a>
+        <p><strong>Cavalry Workshops:</strong> <span th:text="${cavalryWorkshops}"></span></p>
+        <a href="/buy/workshop" class="btn btn-link">Buy Workshop</a>
     </div>
     <div class="info-box">
         <h3>Your Fighters:</h3>
         <p><strong>Archers:</strong> <span th:text="${archers}"></span></p>
         <p><strong>Swordsmen:</strong> <span th:text="${swordsman}"></span></p>
-        <a href="/add/archer">Add Archer</a>
-        <a href="/add/swordsman">Add Swordsman</a>
+        <p><strong>Cavalries:</strong> <span th:text="${cavalries}"></span></p>
+        <a href="/add/archer" class="btn btn-link">Add Archer</a>
+        <a href="/add/swordsman" class="btn btn-link">Add Swordsman</a>
+        <a href="/add/cavalry" class="btn btn-link">Add Cavalry</a>
     </div>
+</div>
+<br>
+<div align="center">
+    <a href="/attack" class="btn btn-action">Attack Player</a>
+</div>
+<div class="info-box">
+    <a href="/logout" class="btn btn-link">Logout</a>
 </div>
 </body>
 </html>

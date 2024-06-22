@@ -2,10 +2,10 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
-import com.example.demo.Repositories.ArcherWorkshopRepository;
-import com.example.demo.Repositories.PlayerRepository;
-import com.example.demo.Repositories.SwordsmanWorkshopRepository;
+import com.example.demo.Repositories.*;
+import com.example.demo.Services.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class WorkshopController {
@@ -23,38 +24,28 @@ public class WorkshopController {
     ArcherWorkshopRepository archerWorkshopRepository;
     @Autowired
     SwordsmanWorkshopRepository swordsmanWorkshopRepository;
+    @Autowired
+    CavalryRepository cavalryRepository;
+    @Autowired
+    CavalryWorkshopRepository cavalryWorkshopRepository;
+    @Autowired
+    WorkshopService workshopService;
     @GetMapping("/buy/workshop")
     public String chooseWorkshopToBuyForm(){
         return "choose-workshop";
     }
     @PostMapping("/buy/workshop")
-    public String buyWorkshop(@RequestParam("workshopType") String workshopType){
-        if(workshopType.equals("archer")){
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-            Player player = playerRepository.findByUsername(username);
-            int playerGold = player.getGold().getAmount();
-            int price = 200;
-            if(playerGold > price){
-                player.getGold().setAmount(playerGold - price);
-                archerWorkshopRepository.save(new ArcherWorkshop(player));
-            }
-            return "redirect:/home";
-            //return "buy-archer-workshop";
+    public String buyWorkshop(@RequestParam("workshopType") String workshopType, RedirectAttributes redirectAttributes) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Player player = playerRepository.findByUsername(username);
+        if (workshopType.equals("archer")) {
+            return workshopService.buyArcherWorkshop(player, redirectAttributes);
+        } else if (workshopType.equals("swordsman")) {
+            return workshopService.buySwordsmanWorkshop(player, redirectAttributes);
+        } else if (workshopType.equals("cavalry")) {
+            return workshopService.buyCavalryWorkshop(player, redirectAttributes);
         }
-        else if(workshopType.equals("swordsman")){
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            String username = authentication.getName();
-            Player player = playerRepository.findByUsername(username);
-            int playerSilver = player.getSilver().getAmount();
-            int price = 500;
-            if(playerSilver > price){
-                player.getSilver().setAmount(playerSilver - price);
-                swordsmanWorkshopRepository.save(new SwordsmanWorkshop(player));
-            }
-            return "redirect:/home";
-            //return "buy-swordsman-workshop";
-        }
-        return "choose-workshop";
+        return "redirect:/buy/workshop";
     }
 }

@@ -4,20 +4,20 @@ import com.example.demo.Entities.Player;
 import jakarta.persistence.*;
 
 @Entity
-public class Swordsman {
+public class Cavalry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Player player;
-    @Column(columnDefinition = "integer default 3")
-    public static final int value = 3;
+    @Column(columnDefinition = "integer default 5")
+    public static final int value = 5;
     private boolean inBattle;
 
-    public Swordsman() {
+    public Cavalry() {
     }
 
-    public Swordsman(Player player) {
+    public Cavalry(Player player) {
         this.player = player;
         this.inBattle = false;
     }

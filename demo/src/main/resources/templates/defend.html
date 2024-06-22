@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Defense</title>
+    <style>
+        body {
+            background-color: #e3d7bd;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #4c3526;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #4c3526;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 18px;
+            color: #4c3526;
+            margin-bottom: 10px;
+        }
+
+        input[type="number"] {
+            border-radius: 10px;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #4c3526;
+            margin-bottom: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #8d6e63;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #795548;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/defend}" th:object="${attack}" method="post">
+    <div>
+        <h1>You have been attacked by:</h1>
+        <h2 th:text="${attackerUsername}"></h2>
+        <h1 th:text="${archers}"> Archers</h1>
+        <h1 th:text="${swordsmen}"> Swordsmen</h1>
+        <h1 th:text="${cavalries}"> Cavalries</h1>
+    </div>
+    <div>
+        <h1>Assemble an army to defend:</h1>
+    </div>
+    <div>
+        <label for="numberOfArchers">Number of archers to defend with:</label>
+        <input type="number" name="numberOfArchers" id="numberOfArchers">
+    </div>
+    <div>
+        <label for="numberOfSwordsmen">Number of swordsmen to defend with:</label>
+        <input type="number" name="numberOfSwordsmen" id="numberOfSwordsmen">
+    </div>
+    <div>
+        <label for="numberOfCavalries">Number of cavalries to defend with:</label>
+        <input type="number" name="numberOfCavalries" id="numberOfCavalries">
+    </div>
+    <p>Your number of Archers: <span th:text="${defendersArchers}"></span></p>
+    <p>Your number of Swordsmen: <span th:text="${defendersSwordsmen}"></span></p>
+    <p>Your number of Cavalries: <span th:text="${defendersCavalries}"></span></p>
+    <div th:if="${lessArchers}">
+        <p th:text="${lessArchers}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessSwordsmen}">
+        <p th:text="${lessSwordsmen}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessCavalries}">
+        <p th:text="${lessCavalries}" style="color: red;"></p>
+    </div>
+    <div th:if="${notEnoughStrength}">
+        <p th:text="${fnotEnoughStrength}" style="color: red;"></p>
+    </div>
+
+
+    <div>
+        <button type="submit">Defend</button>
+    </div>
+</form>
+</body>
+</html>

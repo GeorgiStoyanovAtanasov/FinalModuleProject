@@ -2,16 +2,21 @@ package com.example.demo.Entities;
 
 import com.example.demo.Constants.Role;
 import com.example.demo.Entities.Fighters.Archer;
+import com.example.demo.Entities.Fighters.Cavalry;
 import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Materials.Crystal;
 import com.example.demo.Entities.Materials.Gold;
 import com.example.demo.Entities.Materials.Silver;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import jakarta.persistence.*;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Validated
 @Entity
@@ -27,12 +32,15 @@ public class Player {
 
     @OneToMany(mappedBy = "player")
     private List<Swordsman> swordsmen;
-
+    @OneToMany(mappedBy = "player")
+    private List<Cavalry> cavalries;
     @OneToMany(mappedBy = "player")
     private List<ArcherWorkshop> archerWorkshops;
 
     @OneToMany(mappedBy = "player")
     private List<SwordsmanWorkshop> swordsmanWorkshops;
+    @OneToMany(mappedBy = "player")
+    private List<CavalryWorkshop> cavalryWorkshops;
 
     @OneToOne(mappedBy = "player")
     private Gold gold;
@@ -46,6 +54,25 @@ public class Player {
     private Role role;
 
     private boolean isAttacked;
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_gold_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "gold_mine_id")
+    private Map<LocalDate, Long> lastAccessedGoldMines = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_silver_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "silver_mine_id")
+    private Map<LocalDate, Long> lastAccessedSilverMines = new HashMap<>();
+    @ElementCollection
+    @CollectionTable(name = "player_last_accessed_crystal_mines",
+            joinColumns = @JoinColumn(name = "player_id"))
+    @MapKeyColumn(name = "date")
+    @Column(name = "crystal_mine_id")
+    private Map<LocalDate, Long> lastAccessedCrystalMines = new HashMap<>();
+
     public Player() {
     }
 
@@ -111,6 +138,14 @@ public class Player {
         return swordsmanWorkshops;
     }
 
+    public List<CavalryWorkshop> getCavalryWorkshops() {
+        return cavalryWorkshops;
+    }
+
+    public void setCavalryWorkshops(List<CavalryWorkshop> cavalryWorkshops) {
+        this.cavalryWorkshops = cavalryWorkshops;
+    }
+
     public void setSwordsmanWorkshops(List<SwordsmanWorkshop> swordsmanWorkshop) {
         this.swordsmanWorkshops = swordsmanWorkshop;
     }
@@ -163,11 +198,41 @@ public class Player {
         this.swordsmen = swordsmen;
     }
 
+    public List<Cavalry> getCavalries() {
+        return cavalries;
+    }
+
+    public void setCavalries(List<Cavalry> cavalries) {
+        this.cavalries = cavalries;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Map<LocalDate, Long> getLastAccessedGoldMines() {
+        return lastAccessedGoldMines;
+    }
+
+    public void setLastAccessedGoldMines(Map<LocalDate, Long> lastAccessedGoldMines) {
+        this.lastAccessedGoldMines = lastAccessedGoldMines;
+    }
+    public Map<LocalDate, Long> getLastAccessedSilverMines() {
+        return lastAccessedSilverMines;
+    }
+
+    public void setLastAccessedSilverMines(Map<LocalDate, Long> lastAccessedSilverMines) {
+        this.lastAccessedSilverMines = lastAccessedSilverMines;
+    }
+    public Map<LocalDate, Long> getLastAccessedCrystalMines() {
+        return lastAccessedCrystalMines;
+    }
+
+    public void setLastAccessedCrystalMines(Map<LocalDate, Long> lastAccessedCrystalMines) {
+        this.lastAccessedCrystalMines = lastAccessedCrystalMines;
     }
 }

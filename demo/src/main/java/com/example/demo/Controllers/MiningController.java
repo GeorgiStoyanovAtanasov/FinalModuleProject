@@ -1,8 +1,8 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Entities.ChosenMines.ChosenCrystalMineEntity;
-import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
-import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenCrystalMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenGoldMineEntity;
+//import com.example.demo.Entities.ChosenMines.ChosenSilverMineEntity;
 import com.example.demo.Entities.Mines.CrystalMine;
 import com.example.demo.Entities.Mines.GoldMine;
 import com.example.demo.Entities.Mines.SilverMine;
@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 @Controller
 public class MiningController {
     @Autowired
@@ -26,12 +28,12 @@ public class MiningController {
     PlayerRepository playerRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
-    @Autowired
-    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
-    @Autowired
-    ChosenSilverMineRepository chosenSilverMineRepository;
-    @Autowired
-    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
+//    @Autowired
+//    ChosenGoldMineEntityRepository chosenGoldMineEntityRepository;
+//    @Autowired
+//    ChosenSilverMineRepository chosenSilverMineRepository;
+//    @Autowired
+//    ChosenCrystalMineEntityRepository chosenCrystalMineEntityRepository;
     @Autowired
     CrystalMineService crystalMineService;
     @Autowired
@@ -43,66 +45,36 @@ public class MiningController {
         return "mine-choice";
     }
     @GetMapping("/mine/gold")
-    public String mineGod() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
-        GoldMine currentGoldMine = (chosenGoldMineEntity != null) ? chosenGoldMineEntity.getCurrentGoldMine() : null;
-        if (currentGoldMine != null && currentGoldMine.getMaterials(player, goldMineService)) {
-            playerRepository.save(player);
-            return "redirect:/gold/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+    public String mineGod(RedirectAttributes redirectAttributes) {
+        return goldMineService.mineGold(redirectAttributes);
     }
     @GetMapping("/gold/mine/success")
     public String getGoldSuccessMessage(){
         return "gold-success-message";
     }
-    @GetMapping("/admin/selectGoldMine")
-    public String selectGoldMine() {
-        GoldMine selectedGoldMine = goldMineRepository.findById(2L).orElse(null);
-        if (selectedGoldMine != null) {
-            ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
-            if (chosenGoldMineEntity != null) {
-                chosenGoldMineEntity.setCurrentGoldMine(selectedGoldMine);
-                chosenGoldMineEntityRepository.save(chosenGoldMineEntity);
-            }
-        }
-        return "redirect:/home";
-    }
+//    @GetMapping("/admin/selectGoldMine")
+//    public String selectGoldMine() {
+//        GoldMine selectedGoldMine = goldMineRepository.findById(2L).orElse(null);
+//        if (selectedGoldMine != null) {
+//            ChosenGoldMineEntity chosenGoldMineEntity = chosenGoldMineEntityRepository.findById(1L).orElse(null);
+//            if (chosenGoldMineEntity != null) {
+//                chosenGoldMineEntity.setCurrentGoldMine(selectedGoldMine);
+//                chosenGoldMineEntityRepository.save(chosenGoldMineEntity);
+//            }
+//        }
+//        return "redirect:/home";
+//    }
     @GetMapping("/mine/silver")
-    public String mineSilver() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenSilverMineEntity chosenSilverMineEntity = chosenSilverMineRepository.findById(1L).orElse(null);
-        SilverMine currentSilverMine = (chosenSilverMineEntity != null) ? chosenSilverMineEntity.getCurrentSilverMine() : null;
-        if (currentSilverMine != null && currentSilverMine.getMaterials(player, silverMineService)) {
-            playerRepository.save(player);
-            return "redirect:/silver/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+    public String mineSilver(RedirectAttributes redirectAttributes) {
+        return silverMineService.mineSilver(redirectAttributes);
     }
     @GetMapping("/silver/mine/success")
     public String getSilverSuccessMessage(){
         return "silver-success-message";
     }
     @GetMapping("/mine/crystal")
-    public String mineCrystal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        ChosenCrystalMineEntity chosenCrystalMineEntity = chosenCrystalMineEntityRepository.findById(1L).orElse(null);
-        CrystalMine currentCrystalMine = (chosenCrystalMineEntity != null) ? chosenCrystalMineEntity.getCurrentCrystalMine() : null;
-        if (currentCrystalMine != null && currentCrystalMine.getMaterials(player, crystalMineService)) {
-            playerRepository.save(player);
-            return "redirect:/crystal/mine/success";
-        } else {
-            return "redirect:/mine";
-        }
+    public String mineCrystal(RedirectAttributes redirectAttributes) {
+        return crystalMineService.mineCrystal(redirectAttributes);
     }
     @GetMapping("/crystal/mine/success")
     public String getCrystalSuccessMessage(){

@@ -40,25 +40,22 @@
     </style>
 </head>
 <body>
-<h1>Choose Archer Workshop:</h1>
-<form action="#" th:action="@{/add/archer}" method="post">
+<h1>Choose Cavalry Workshop:</h1>
+<form action="#" th:action="@{/add/cavalry}" method="post">
     <div>
-        <select name="archerWorkshop">
-            <option th:each="archerWorkshop : ${archerWorkshops}" th:value="${archerWorkshop.id}" th:text="${archerWorkshop.lastAccessDate != null ? 'Archer Workshop: ' + archerWorkshop.lastAccessDate : 'No last access date'}">Archer Workshop:
+        <select name="cavalryWorkshop">
+            <option th:each="cavalryWorkshop : ${cavalryWorkshops}" th:value="${cavalryWorkshop.id}" th:text="${cavalryWorkshop.lastAccessDate != null ? 'Cavalry Workshop: ' + cavalryWorkshop.lastAccessDate : 'No last access date'}">Cavalry Workshop:
             </option>
         </select>
     </div>
-    <div>
-        <button type="submit" class="btn btn-submit">Add Archer</button>
-    </div>
-    <div th:if="${notEnoughGold}">
-        <p th:text="${notEnoughGold}" style="color: red;"></p>
+    <div th:if="${notEnoughCrystal}">
+        <p th:text="${notEnoughCrystal}" style="color: red;"></p>
     </div>
     <div th:if="${timeLimit}">
         <p th:text="${timeLimit}" style="color: red;"></p>
     </div>
-    <div th:if="${null}">
-        <p th:text="${null}" style="color: red;"></p>
+    <div>
+        <button type="submit" class="btn btn-submit">Add Cavalry</button>
     </div>
     <br>
     <div align="center">

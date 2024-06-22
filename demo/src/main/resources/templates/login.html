@@ -51,7 +51,10 @@
             <label for="password">Password:</label>
             <input type="password" class="form-control" id="password" name="password">
         </div>
-        <button type="submit" class="btn btn-block">Submit</button>
+        <div th:if="${wrongCredentials}" class="error-message">
+            <p th:text="${wrongCredentials}"></p>
+        </div>
+        <button type="submit" class="btn btn-block">Sign in</button>
     </form>
     <div class="form-group"><a href="http://localhost:8080/register">Sign up:</a></div>
 </div>

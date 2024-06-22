@@ -4,9 +4,11 @@ import com.example.demo.Entities.Fighters.Archer;
 import com.example.demo.Entities.Fighters.Swordsman;
 import com.example.demo.Entities.Player;
 import com.example.demo.Entities.Workshops.ArcherWorkshop;
+import com.example.demo.Entities.Workshops.CavalryWorkshop;
 import com.example.demo.Entities.Workshops.SwordsmanWorkshop;
 import com.example.demo.Repositories.*;
 import com.example.demo.Services.ArcherWorkshopService;
+import com.example.demo.Services.CavalryWorkshopService;
 import com.example.demo.Services.SwordsmanWorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -35,6 +38,10 @@ public class FighterController {
     SwordsmanWorkshopRepository swordsmanWorkshopRepository;
     @Autowired
     SwordsmanWorkshopService swordsmanWorkshopService;
+    @Autowired
+    CavalryWorkshopRepository cavalryWorkshopRepository;
+    @Autowired
+    CavalryWorkshopService cavalryWorkshopService;
 
     @GetMapping("/add/archer")
     public String chooseArcherWorkshopForm(Model model) {
@@ -47,21 +54,8 @@ public class FighterController {
     }
 
     @PostMapping("/add/archer")
-    public String buyArcher(@RequestParam("archerWorkshop") Long archerWorkshopId, Model model) {
-        ArcherWorkshop archerWorkshop = archerWorkshopRepository.findById(archerWorkshopId).orElse(null);
-        if (archerWorkshop == null) {
-            return "redirect:/add/archer";
-        }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        Player player = playerRepository.findByUsername(username);
-        boolean doesPlayerGetArcher = archerWorkshopService.addArcher(player, archerWorkshop);
-        if (!doesPlayerGetArcher) {
-            return "redirect:/add/archer";
-        }
-        model.addAttribute("archers", player.getArchers());
-        return "redirect:/home";
-        //return "add-archer-success";
+    public String buyArcher(@RequestParam(name = "archerWorkshop", required = false) Long archerWorkshopId, Model model, RedirectAttributes redirectAttributes) {
+        return archerWorkshopService.buyArcher(archerWorkshopId, model, redirectAttributes);
     }
     @GetMapping("/add/swordsman")
     public String chooseSwordsmanWorkshopForm(Model model) {
@@ -73,20 +67,20 @@ public class FighterController {
         return "choose-swordsmanWorkshop-to-add-swordsman";
     }
     @PostMapping("/add/swordsman")
-    public String buySwordsman(@RequestParam("swordsmanWorkshop") Long swordsmanWorkshopId, Model model) {
-        SwordsmanWorkshop swordsmanWorkshop = swordsmanWorkshopRepository.findById(swordsmanWorkshopId).orElse(null);
-        if (swordsmanWorkshop == null) {
-            return "redirect:/add/swordsman";
-        }
+    public String buySwordsman(@RequestParam(name = "swordsmanWorkshop", required = false) Long swordsmanWorkshopId, Model model,  RedirectAttributes redirectAttributes) {
+        return swordsmanWorkshopService.buySwordsman(swordsmanWorkshopId, model, redirectAttributes);
+    }
+    @GetMapping("/add/cavalry")
+    public String chooseCavalryWorkshopForm(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Player player = playerRepository.findByUsername(username);
-        boolean doesPlayerGetSwordsman = swordsmanWorkshopService.addSwordsman(player, swordsmanWorkshop);
-        if (!doesPlayerGetSwordsman) {
-            return "redirect:/add/swordsman";
-        }
-        model.addAttribute("swordsmen", player.getSwordsmen());
-        return "redirect:/home";
-        //return "add-swordsman-success";
+        List<CavalryWorkshop> cavalryWorkshopsToSelectFrom = cavalryWorkshopRepository.findAllByPlayer(player);
+        model.addAttribute("cavalryWorkshops", cavalryWorkshopsToSelectFrom);
+        return "choose-cavalryWorkshop-to-add-cavalry";
+    }
+    @PostMapping("/add/cavalry")
+    public String buyCavalry(@RequestParam(name = "cavalryWorkshop", required = false) Long cavalryWorkshopId, Model model, RedirectAttributes redirectAttributes) {
+        return cavalryWorkshopService.buyCavalry(cavalryWorkshopId, model, redirectAttributes);
     }
 }
