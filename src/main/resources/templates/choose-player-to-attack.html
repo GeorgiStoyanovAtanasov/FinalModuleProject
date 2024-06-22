@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e0d3a7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+            background-color: #f0e6d2;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-mine {
+            background-color: #9e7b4e;
+            border-color: #9e7b4e;
+        }
+
+        .btn-mine:hover {
+            background-color: #7b5a33;
+            border-color: #7b5a33;
+        }
+
+        .btn-submit {
+            background-color: #8b4513;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-submit:hover {
+            background-color: #654321;
+        }
+
+        input[type="number"] {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            width: 150px;
+        }
+
+        select {
+            border-radius: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin: 5px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/attack}" method="post">
+    <div>
+        <select name="playerToAttack">
+            <option th:each="player : ${players}" th:value="${player.id}" th:text="${player.username}">Player:
+            </option>
+        </select>
+    </div>
+    <div>
+        <label for="numberOfArchers">Number of archers to attack with:</label>
+        <input type="number" name="numberOfArchers" id="numberOfArchers">
+    </div>
+    <div>
+        <label for="numberOfSwordsmen">Number of swordsmen to attack with:</label>
+        <input type="number" name="numberOfSwordsmen" id="numberOfSwordsmen">
+    </div>
+    <div>
+        <label for="numberOfCavalries">Number of cavalries to attack with:</label>
+        <input type="number" name="numberOfCavalries" id="numberOfCavalries">
+    </div>
+    <div th:if="${notSmart}">
+        <p th:text="${notSmart}" style="color: red;"></p>
+    </div>
+    <div th:if="${noDefender}">
+        <p th:text="${noDefender}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessArchers}">
+        <p th:text="${lessArchers}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessSwordsmen}">
+        <p th:text="${lessSwordsmen}" style="color: red;"></p>
+    </div>
+    <div th:if="${lessCavalries}">
+        <p th:text="${lessCavalries}" style="color: red;"></p>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-submit">Attack</button>
+    </div>
+</form>
+<br>
+<div align="center">
+    <a href="/home" class="btn btn-submit">Home</a>
+</div>
+</body>
+</html>
